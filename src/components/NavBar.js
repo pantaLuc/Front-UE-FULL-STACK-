@@ -52,8 +52,22 @@ const NavBar = () => {
                 
              
             </div>
+            
 
             <div className="hidden lg:flex lg:items-center lg:space-x-10">
+            <div class="center ml-4 mr-auto max-w-xs flex-1">
+                <label for="" class="sr-only"> Search </label>
+                <div class="relative">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    </div>
+
+                    <input type="search" name="" id="" class="block w-full rounded-lg border border-gray-300 py-2 pl-10 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm" placeholder="rechercher" />
+                </div>
+            </div>
+
                 <Link to="/signup" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                     Sign up
                 </Link>
@@ -75,6 +89,7 @@ const NavBar = () => {
                 
              
         </nav>
+        
     </div>
     );
 };
