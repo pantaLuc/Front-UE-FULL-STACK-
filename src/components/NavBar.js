@@ -6,7 +6,7 @@ const NavBar = () => {
     const [navbar, setNavbar] = useState(false);
     const Links = [
         {
-          to :"/product",
+          to :"/produit",
           name:"Produits"
         }
         ,

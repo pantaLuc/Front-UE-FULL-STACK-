@@ -5,8 +5,10 @@ import NavBar from "./components/NavBar";
 import Signin from "./components/Signin";
 import Admin from "./pages/Admin";
 import Signup from "./components/Signup"
-import Categorie from "./components/Categorie";
-import Boutique from "./components/Boutique";
+import ListCategorie from "./components/ListCategorie";
+import ListBoutique from "./components/ListBoutique";
+import ListProduits from "./components/ListProduits";
+import AddProduit from "./components/AddProduit";
 
 
 
@@ -18,8 +20,9 @@ function App() {
       <Route path="/" element={<Admin/>}/>
       <Route path="/signin" element={<Signin/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
-      <Route path="/categorie" element={<Categorie/>}></Route>
-      <Route path="/boutique" element={<Boutique/>}></Route>
+      <Route path="/categorie" element={<ListCategorie/>}></Route>
+      <Route path="/boutique" element={<ListBoutique/>}></Route>
+      <Route path="/produit" element={<ListProduits/>}></Route>
      </Routes>
     <Footer/>
     </div>

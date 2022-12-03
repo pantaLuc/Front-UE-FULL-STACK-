@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Boutique = () => {
+const ListBoutique = () => {
     const boutiques=[
         {
             nom:"Maroquinerie Ichraq",
@@ -116,4 +116,4 @@ const Boutique = () => {
     );
 };
 
-export default Boutique;
+export default ListBoutique;

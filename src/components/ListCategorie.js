@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Categorie = () => {
+const ListCategorie = () => {
     const categorie=[
         {
             image:"",
@@ -60,4 +60,4 @@ const Categorie = () => {
     );
 };
 
-export default Categorie;
+export default ListCategorie;
