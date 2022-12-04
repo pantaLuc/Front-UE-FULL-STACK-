@@ -7,7 +7,7 @@ const AddProduit = () => {
             <div className="w-full max-w-md bg-white shadow-lg rounded-xl">
                 <div className="px-3 py-4 sm:p-4">
                     <p className="text-xl font-bold text-gray-900">Ajoutez un produit</p>
-                    <p className="mt-2 text-sm font-medium text-gray-500">Lorem ipsum dolor sit amet, consec tetur adipiscing elit.</p>
+                    <p className="mt-2 text-sm font-medium text-gray-500">remplissz le formulaire pour Ajouter un produit</p>
 
                     <form action="#" method="POST" className="mt-3">
                         <div className="space-y-2">

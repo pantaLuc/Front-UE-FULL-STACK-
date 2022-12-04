@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from './Pagination';
 
 const ListBoutique = () => {
     const boutiques=[
@@ -27,7 +28,19 @@ const ListBoutique = () => {
             proprietaire:"Ichraq Elaidi",
             telephone:"",
             image:"https://img.freepik.com/free-photo/shoemaker-workshop-making-shoes_171337-12296.jpg"
-        }
+        },
+        {
+          nom:"Izac ",
+          proprietaire:"Ichraq Elaidi",
+          telephone:"",
+          image:"https://img.freepik.com/free-photo/shoemaker-workshop-making-shoes_171337-12296.jpg"
+      },
+      {
+        nom:"Zara Shop",
+        proprietaire:"Ichraq Elaidi",
+        telephone:"",
+        image:"https://img.freepik.com/free-photo/pretty-elegant-dark-skinned-woman-beige-jacket-smiles-looks-front-holds-hanger-with-white-knitted-sweater_197531-24100.jpg"
+    }
 
     ]
     return (
@@ -107,7 +120,7 @@ const ListBoutique = () => {
                }
 
 
-
+            <Pagination/>
             
                
             </div>

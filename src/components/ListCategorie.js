@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagination from './Pagination';
 
 const ListCategorie = () => {
     const categorie=[
@@ -53,7 +54,7 @@ const ListCategorie = () => {
                     </div>)
                     })
                 }
-               
+               <Pagination/>
             </div>
         </div>
     </section>

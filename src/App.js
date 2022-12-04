@@ -8,8 +8,6 @@ import Signup from "./components/Signup"
 import ListCategorie from "./components/ListCategorie";
 import ListBoutique from "./components/ListBoutique";
 import ListProduits from "./components/ListProduits";
-import AddProduit from "./components/AddProduit";
-
 
 
 function App() {
