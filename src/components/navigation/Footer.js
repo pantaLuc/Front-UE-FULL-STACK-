@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from'../images/fullStack.png'
+import logo from'../../images/fullStack.png'
 const Footer = () => {
     return (
         <footer className="pt-12 pb-8 bg-white sm:pt-16 lg:pt-20">

@@ -23,15 +23,16 @@ const AddProduit = () => {
                                     <input type="text" name="" id="" placeholder="https://images.unsplash.com/photo-146506078.jpg" value="" className="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600" />
                                 </div>
                             </div>
-                            <div>
-                                <label for="" class="block text-sm font-bold text-gray-900"> Prix </label>
-                                <div class="relative flex mt-1">
-                                    <div class="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">Euro</div>
+                            <div className='flex flex-wrap -mx-2 mb-2'>
+                                <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                                    <label for="" class="block text-sm font-bold text-gray-900"> Prix </label>
+                                    <div class="relative flex mt-1">
+                                        <div class="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">Euro</div>
 
-                                    <input type="number" name="" id="" placeholder="$ 0.00" value="" class="flex-1 block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600" />
+                                        <input type="number" name="" id="" placeholder="$ 0.00" value="" class="flex-1 block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
+                                <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                                 <label for="" class="block text-sm font-bold text-gray-900"> Quantité </label>
                                 <div class="relative flex mt-1">
                                     <div class="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">nombre</div>
@@ -39,6 +40,9 @@ const AddProduit = () => {
                                     <input type="number" name="" id="" placeholder="$ 0.00" value="" class="flex-1 block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600" />
                                 </div>
                             </div>
+                            </div>
+                            
+                            
                             <div>
                               <label for="" class="block text-sm font-bold text-gray-900"> Description </label>
                                 <div class="mt-1">
@@ -65,6 +69,7 @@ const AddProduit = () => {
                                 </div>
                             </div>
                         </div>
+                      
 
                         <div className="flex items-center justify-end mt-5 space-x-4">
                             <button

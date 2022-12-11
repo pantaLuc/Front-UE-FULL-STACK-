@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ListProduits = () => {
  const produits=[
@@ -37,10 +38,10 @@ const ListProduits = () => {
                         </div>
                         <div className="px-5 py-5">
                             <h3 className="text-base font-bold text-gray-900">
-                                <a href="#" title="">
+                                <Link  title="">
                                     {nom}
                                     <span className="absolute inset-0" aria-hidden="true"></span>
-                                </a>
+                                </Link>
                             </h3>
                             <div className="flex mt-1.5 items-center justify-between space-x-4">
                                 <div className="flex flex-wrap items-center">

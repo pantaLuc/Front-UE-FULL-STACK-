@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from'../images/fullStack.png'
+import logo from'../../images/fullStack.png'
 const NavBar = () => {
     const [navbar, setNavbar] = useState(false);
     const Links = [

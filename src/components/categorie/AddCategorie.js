@@ -2,7 +2,7 @@ import React from 'react';
 
 const AddCategorie = () => {
     return (
-        <div className=" bg-gray-100">
+        <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
         <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
             <div className="w-full max-w-md bg-white shadow-lg rounded-xl">
                 <div className="px-3 py-4 sm:p-4">

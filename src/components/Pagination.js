@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Pagination = () => {
     return (
@@ -12,7 +13,7 @@ const Pagination = () => {
                     </svg>
                 </a>
 
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 1 </a>
+                <Link href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 1 </Link>
 
                 <a href="#" title="" aria-current="page" className="relative z-10 inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-900 bg-white border border-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 2 </a>
 
