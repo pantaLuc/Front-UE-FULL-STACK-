@@ -9,13 +9,12 @@ import ListCategorie from "./components/categorie/ListCategorie";
 import ListBoutique from "./components/boutique/ListBoutique";
 import ListProduits from "./components/produit/ListProduits";
 import Home from "./pages/Home";
-import AddBoutique from "./components/boutique/AddBoutique";
+
 
 function App() {
   return (
     <div className="App">
       <NavBar/>
-      <AddBoutique/>
      <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/signin" element={<Signin/>}></Route>
