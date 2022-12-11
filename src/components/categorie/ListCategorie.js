@@ -1,6 +1,7 @@
 import React from 'react';
+import Pagination from '../Pagination';
 
-const Categorie = () => {
+const ListCategorie = () => {
     const categorie=[
         {
             image:"",
@@ -53,11 +54,11 @@ const Categorie = () => {
                     </div>)
                     })
                 }
-               
+               <Pagination/>
             </div>
         </div>
     </section>
     );
 };
 
-export default Categorie;
+export default ListCategorie;

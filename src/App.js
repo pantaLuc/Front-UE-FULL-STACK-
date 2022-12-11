@@ -1,25 +1,28 @@
 
 import { Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
-import Signin from "./components/Signin";
-import Admin from "./pages/Admin";
-import Signup from "./components/Signup"
-import Categorie from "./components/Categorie";
-import Boutique from "./components/Boutique";
+import Footer from "./components/navigation/Footer";
+import NavBar from "./components/navigation/NavBar";
+import Signin from "./components/authentification/Signin";
 
-
+import Signup from "./components/authentification/Signup"
+import ListCategorie from "./components/categorie/ListCategorie";
+import ListBoutique from "./components/boutique/ListBoutique";
+import ListProduits from "./components/produit/ListProduits";
+import Home from "./pages/Home";
+import AddBoutique from "./components/boutique/AddBoutique";
 
 function App() {
   return (
     <div className="App">
       <NavBar/>
+      <AddBoutique/>
      <Routes>
-      <Route path="/" element={<Admin/>}/>
+      <Route path="/" element={<Home/>}/>
       <Route path="/signin" element={<Signin/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
-      <Route path="/categorie" element={<Categorie/>}></Route>
-      <Route path="/boutique" element={<Boutique/>}></Route>
+      <Route path="/categorie" element={<ListCategorie/>}></Route>
+      <Route path="/boutique" element={<ListBoutique/>}></Route>
+      <Route path="/produit" element={<ListProduits/>}></Route>
      </Routes>
     <Footer/>
     </div>
