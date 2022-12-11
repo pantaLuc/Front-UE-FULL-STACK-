@@ -32,7 +32,8 @@ const Signup = () => {
                                         />
                                     </div>
                                 </div>
-                                <div>
+                                <div className='flex flex-wrap -mx-2 mb-2'>
+                                <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                                     <label for="" className="text-base font-medium text-gray-900">Prenom </label>
                                     <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -49,6 +50,26 @@ const Signup = () => {
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
                                         />
                                     </div>
+                                </div>
+                                <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                                    <label for="" className="text-base font-medium text-gray-900">Nom </label>
+                                    <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+    
+                                        <input
+                                            type="text"
+                                            name=""
+                                            id=""
+                                            placeholder="Entrez votre Prenom"
+                                            className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                        />
+                                    </div>
+                                </div>
+
                                 </div>
                                
     
