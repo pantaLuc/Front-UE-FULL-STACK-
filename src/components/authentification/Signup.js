@@ -1,26 +1,35 @@
 import axios from 'axios';
-import React ,{ useState } from 'react';
-import { Link, Navigate, redirect } from 'react-router-dom';
+
+import React ,{ useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+
 
 const Signup = () => {
-    const [user, setUser] = useState({
-        "username": "",
-        "password": "",
-        "firstName": "",
-        "lastName": ""
-    });
+    const[username ,setUsername]=useState("");
+    const[password ,setPassword]=useState("");
+    const[firstName ,setFirstName]=useState("");
+    const[lastName ,setLastName]=useState("");
+    const[alertUserName ,setAlertUserName]=useState(true);
+    const[alertPassword ,setAlertPassword]=useState(true)
+    useEffect(()=>{
+       setAlertUserName(username.length>3 ? true : false );
+       setAlertPassword(password.length>7?true :false )
+    },[username ,password ,lastName,firstName])
+
     const handleSubmit = (values) => {
         values.preventDefault();
+        
       axios({
         method: "POST",
         url: `http://localhost:8080/user/signup`,
-        data: JSON.stringify(user),
+       data: JSON.stringify({"username":username,"password":password,"firstName":firstName,"lastName":lastName}),
         headers: {
             'Content-Type': 'application/json'
         }
     }).then(res => {
         console.log(res.data)
-        window.location="/signin"
+            
         });
     };
     return (
@@ -37,7 +46,7 @@ const Signup = () => {
                             <div className="space-y-5">
                                 <div>
                                     <label for="" className="text-base font-medium text-gray-900"> Username</label>
-                                    <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                                    <div className="mt-2 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -50,14 +59,15 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre nom d'utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(event) => { setUser({...user,username:event.target.value}) }}
+                                            onChange = {(e) =>setUsername(e.target.value)}
                                         />
                                     </div>
+                                    <span hidden={alertUserName} className="text-base font-medium text-red-900">Le username doit faire aumoins 3 caracteres</span>
                                 </div>
                                 <div className='flex flex-wrap -mx-2 mb-2'>
                                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                                     <label for="" className="text-base font-medium text-gray-900">Prenom </label>
-                                    <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                                    <div className="mt-2 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -70,13 +80,13 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre Prenom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(event) => { setUser({...user,lastName:event.target.value}) }}
+                                            onChange = {(e)=>setFirstName(e.target.value)  }
                                         />
                                     </div>
                                 </div>
                                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                                     <label for="" className="text-base font-medium text-gray-900">Nom </label>
-                                    <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                                    <div className="mt-2 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -89,7 +99,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre Nom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(event) => { setUser({...user,firstName:event.target.value}) }}
+                                            onChange = {(e) => setLastName(e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -99,7 +109,7 @@ const Signup = () => {
     
                                 <div>
                                     <label for="" className="text-base font-medium text-gray-900"> Password </label>
-                                    <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
+                                    <div className="mt-2 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                             <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path
@@ -117,9 +127,10 @@ const Signup = () => {
                                             id=""
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(event) => { setUser({...user,password:event.target.value}) }}
+                                            onChange = {(e) => setPassword(e.target.value)}
                                         />
                                     </div>
+                                    <span hidden={alertPassword} className="text-base font-medium text-red-900">Le mot de passe  doit faire aumoins 8 caracteres</span>
                                 </div>
     
                            
