@@ -1,7 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React ,{ useState } from 'react';
+import { Link, Navigate, redirect } from 'react-router-dom';
 
 const Signup = () => {
+    const [user, setUser] = useState({
+        "username": "",
+        "password": "",
+        "firstName": "",
+        "lastName": ""
+    });
+    const handleSubmit = (values) => {
+        values.preventDefault();
+      axios({
+        method: "POST",
+        url: `http://localhost:8080/user/signup`,
+        data: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        console.log(res.data)
+        window.location="/signin"
+        });
+    };
     return (
         <section className="py-7 bg-gray-50 sm:py-12 lg:py-12">
         <div className="px-4 mx-auto max-w-7xl sm:px-5 lg:px-7">
@@ -29,6 +50,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre nom d'utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                            onChange = {(event) => { setUser({...user,username:event.target.value}) }}
                                         />
                                     </div>
                                 </div>
@@ -48,6 +70,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre Prenom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                            onChange = {(event) => { setUser({...user,lastName:event.target.value}) }}
                                         />
                                     </div>
                                 </div>
@@ -64,8 +87,9 @@ const Signup = () => {
                                             type="text"
                                             name=""
                                             id=""
-                                            placeholder="Entrez votre Prenom"
+                                            placeholder="Entrez votre Nom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                            onChange = {(event) => { setUser({...user,firstName:event.target.value}) }}
                                         />
                                     </div>
                                 </div>
@@ -93,6 +117,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
+                                            onChange = {(event) => { setUser({...user,password:event.target.value}) }}
                                         />
                                     </div>
                                 </div>
@@ -100,7 +125,7 @@ const Signup = () => {
                            
     
                                 <div>
-                                    <button type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
+                                    <button onClick={handleSubmit} type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         Creer un Compte
                                     </button>
                                 </div>
