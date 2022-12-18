@@ -20,11 +20,11 @@ function reducer(state,action){
               .then((response) => {
                 state.token=response.data;
                  const jwt=jwt_decode(state.token)
-                 const date=new Date(jwt)
+               //  const date=new Date(jwt)
                  if(jwt.roles[0].authority){
                     console.log("c'est un admin")
                  }else{
-                    console.log("c'est un Vendeur")
+                    console.log("c'est un Vendeur-livreur")
                  }
                
               }, (error) => {
@@ -40,14 +40,12 @@ function reducer(state,action){
                 
               })
               .then((response) => {
-                
+                console.log(response)
               }, (error) => {
                 console.log( "l' erreur " ,error.message);
               });
         }
-        default:{
-
-        }
+        default:return state
     }
 }
 //creation du context 
@@ -70,6 +68,7 @@ const Provider=({children})=>{
         signin,
         signup
     }
+    
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 

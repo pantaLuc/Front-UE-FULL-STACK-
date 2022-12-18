@@ -10,7 +10,7 @@ const Signup = () => {
     const[alertPassword ,setAlertPassword]=useState(true)
     useEffect(()=>{
        setAlertUserName(state.username.length>3 ? true : false );
-       setAlertPassword(state.password.length>7?true :false )
+       setAlertPassword(state.password.length>7 ?true :false )
     },[state.password ,state.username,state.lastName,state.firstName])
 
     
