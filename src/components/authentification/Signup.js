@@ -1,37 +1,19 @@
-import axios from 'axios';
-
-import React ,{ useState, useEffect } from 'react';
+import React ,{ useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import {Context} from "../../Context"
 
 
 const Signup = () => {
-    const[username ,setUsername]=useState("");
-    const[password ,setPassword]=useState("");
-    const[firstName ,setFirstName]=useState("");
-    const[lastName ,setLastName]=useState("");
+    const {state ,signup}=useContext(Context)
+    
     const[alertUserName ,setAlertUserName]=useState(true);
     const[alertPassword ,setAlertPassword]=useState(true)
     useEffect(()=>{
-       setAlertUserName(username.length>3 ? true : false );
-       setAlertPassword(password.length>7?true :false )
-    },[username ,password ,lastName,firstName])
+       setAlertUserName(state.username.length>3 ? true : false );
+       setAlertPassword(state.password.length>7?true :false )
+    },[state.password ,state.username,state.lastName,state.firstName])
 
-    const handleSubmit = (values) => {
-        values.preventDefault();
-        
-      axios({
-        method: "POST",
-        url: `http://localhost:8080/user/signup`,
-       data: JSON.stringify({"username":username,"password":password,"firstName":firstName,"lastName":lastName}),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        console.log(res.data)
-            
-        });
-    };
+    
     return (
         <section className="py-7 bg-gray-50 sm:py-12 lg:py-12">
         <div className="px-4 mx-auto max-w-7xl sm:px-5 lg:px-7">
@@ -59,7 +41,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre nom d'utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e) =>setUsername(e.target.value)}
+                                            onChange = {(e) =>{state.username=e.target.value}}
                                         />
                                     </div>
                                     <span hidden={alertUserName} className="text-base font-medium text-red-900">Le username doit faire aumoins 3 caracteres</span>
@@ -80,7 +62,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre Prenom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e)=>setFirstName(e.target.value)  }
+                                            onChange = {(e)=>{state.firstName=e.target.value}  }
                                         />
                                     </div>
                                 </div>
@@ -99,7 +81,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre Nom"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e) => setLastName(e.target.value)}
+                                            onChange = {(e) => {state.lastName=e.target.value}}
                                         />
                                     </div>
                                 </div>
@@ -127,7 +109,7 @@ const Signup = () => {
                                             id=""
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e) => setPassword(e.target.value)}
+                                            onChange = {(e) => {state.password=e.target.value}}
                                         />
                                     </div>
                                     <span hidden={alertPassword} className="text-base font-medium text-red-900">Le mot de passe  doit faire aumoins 8 caracteres</span>
@@ -136,7 +118,10 @@ const Signup = () => {
                            
     
                                 <div>
-                                    <button onClick={handleSubmit} type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
+                                    <button onClick={(e)=>{
+                                        e.preventDefault();
+                                        signup()
+                                    }} type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         Creer un Compte
                                     </button>
                                 </div>
