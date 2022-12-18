@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import {Context} from "../../Context"
 const Signin = () => {
+   const {state ,signin}=useContext(Context);
+  //console.log(value)
     return (
         <section className="py-5 bg-gray-50 sm:py-8 lg:py-12">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -28,6 +30,9 @@ const Signin = () => {
                                             type="text"
                                             name=""
                                             id=""
+                                            onChange={(e)=>{
+                                               state.username = e.target.value;
+                                            }}
                                             placeholder="Entrez votre nom d' utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
                                         />
@@ -56,6 +61,9 @@ const Signin = () => {
                                             type="password"
                                             name=""
                                             id=""
+                                            onChange={(e)=>{
+                                                state.password=e.target.value
+                                            }}
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
                                         />
@@ -63,7 +71,12 @@ const Signin = () => {
                                 </div>
     
                                 <div>
-                                    <button type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
+                                    <button type="submit" 
+                                        onClick={(e)=>{
+                                            e.preventDefault();
+                                            signin()
+                                        }}
+                                    className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         connectez-vous
                                     </button>
                                 </div>
