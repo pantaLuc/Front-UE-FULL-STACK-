@@ -19,6 +19,14 @@ function reducer(state,action){
                 console.log( "l'erreur " ,error.message);
               });
         }
+        case "allcategorie":{
+            return axios.get(`http://localhost:8080/categorie`)
+               .then((response) => {
+                 console.log(response.data);
+               }, (error) => {
+                 console.log( "l'erreur " ,error.message);
+               });
+         }
         default:{
 
         }
@@ -35,11 +43,17 @@ const ProviderCategorie=({children})=>{
             type:"addcategorie"
         })
     }
+    const allcategorie=()=>{
+        dispatch({
+            type:"allcategorie"
+        })
+    }
     const value={
         state,
-        addcategorie
+        addcategorie,
+        allcategorie
     }
-    return <ContextCategorie.ProviderCategorie value={value}>{children}</ContextCategorie.ProviderCategorie>
+    return <ContextCategorie.Provider value={value}>{children}</ContextCategorie.Provider>
 }
 
 export default ProviderCategorie;
