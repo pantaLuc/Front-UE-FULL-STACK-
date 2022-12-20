@@ -9,14 +9,14 @@ const Signin = () => {
     showAlert:false
 })
     return (
-        <section className="py-5 bg-gray-50 sm:py-8 lg:py-12">
+        <section className="py-3 bg-gray-50 sm:py-3 lg:py-3">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Bienvenue !</h2>
                 <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">connectez vous a votre compte</p>
             </div>
             {errorHandler.showAlert?
-            (<div className="py-12 bg-transparent">
+            (<div className="py-5 bg-transparent">
             <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                 <div className="max-w-2xl mx-auto">
                     <div className="border border-yellow-300 rounded-lg bg-yellow-50">
@@ -47,7 +47,7 @@ const Signin = () => {
             </div>
         </div>):null
             }
-            <div className="relative max-w-md mx-auto mt-8 md:mt-16">
+            <div className="relative max-w-md mx-auto mt-8 md:mt-8">
                 <div className="overflow-hidden bg-white rounded-md shadow-md">
                     <div className="px-4 py-6 sm:px-8 sm:py-7">
                         <form action="#" method="POST">
