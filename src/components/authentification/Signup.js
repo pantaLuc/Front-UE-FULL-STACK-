@@ -1,18 +1,17 @@
-import React ,{ useState, useEffect, useContext } from 'react';
+import React ,{ useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {Context} from "../../Context"
 
 
 const Signup = () => {
     const {state ,signup}=useContext(Context)
-    
-    const[alertUserName ,setAlertUserName]=useState(true);
-    const[alertPassword ,setAlertPassword]=useState(true)
-    useEffect(()=>{
-       setAlertUserName(state.username.length>3 ? true : false );
-       setAlertPassword(state.password.length>7 ?true :false )
-    },[state.password ,state.username,state.lastName,state.firstName])
-
+    const [errorHandler ,setErrorHandler]=useState({
+        usernameError:"",
+        showUserNameError:true,
+        passwordError:"",
+        showPassError:true,
+        showErrorName:true ,
+    })
     
     return (
         <section className="py-7 bg-gray-50 sm:py-12 lg:py-12">
@@ -41,10 +40,16 @@ const Signup = () => {
                                             id=""
                                             placeholder="Entrez votre nom d'utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e) =>{state.username=e.target.value}}
+                                            onChange = {(e) =>{
+                                                state.username=e.target.value;
+                                               setErrorHandler({
+                                                ...errorHandler,
+                                                usernameError:state.username
+                                               })
+                                            }}
                                         />
                                     </div>
-                                    <span hidden={alertUserName} className="text-base font-medium text-red-900">Le username doit faire aumoins 3 caracteres</span>
+                                    <span hidden={errorHandler.showUserNameError} className="text-base font-medium text-red-900">Le username doit faire aumoins 3 caracteres</span>
                                 </div>
                                 <div className='flex flex-wrap -mx-2 mb-2'>
                                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
@@ -84,8 +89,9 @@ const Signup = () => {
                                             onChange = {(e) => {state.lastName=e.target.value}}
                                         />
                                     </div>
+                                    
                                 </div>
-
+                                <span hidden={errorHandler.showErrorName} className="text-base px-3 font-medium text-red-900">Le nom et le prenom sont  requis</span>
                                 </div>
                                
     
@@ -109,10 +115,16 @@ const Signup = () => {
                                             id=""
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
-                                            onChange = {(e) => {state.password=e.target.value}}
+                                            onChange = {(e) => {
+                                                state.password=e.target.value
+                                                setErrorHandler({
+                                                    ...errorHandler,
+                                                    passwordError:state.password
+                                                })
+                                            }}
                                         />
                                     </div>
-                                    <span hidden={alertPassword} className="text-base font-medium text-red-900">Le mot de passe  doit faire aumoins 8 caracteres</span>
+                                    <span hidden={errorHandler.showPassError} className="text-base font-medium text-red-900">Le mot de passe  doit faire aumoins 8 caracteres</span>
                                 </div>
     
                            
@@ -120,7 +132,19 @@ const Signup = () => {
                                 <div>
                                     <button onClick={(e)=>{
                                         e.preventDefault();
-                                        signup()
+                                        const regexUsername = new RegExp("^.{4,4}$|^.{5,5}$")
+                                        const regexPass = new RegExp("^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$");
+                                        if(!regexUsername.test(errorHandler.usernameError)&& !regexPass.test(errorHandler.passwordError)){
+                                            setErrorHandler({
+                                                ...errorHandler,
+                                                showPassError:false,
+                                                showUserNameError:false,
+                                                showErrorName:false
+                                            })
+                                        }else{
+                                            signup()
+                                        }
+                                       
                                     }} type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         Creer un Compte
                                     </button>

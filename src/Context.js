@@ -1,5 +1,5 @@
 import axios  from "axios";
-import React, { useReducer } from "react"
+import React, { useMemo, useReducer } from "react"
 import jwt_decode from "jwt-decode";
 
 const user={
@@ -61,13 +61,18 @@ const Provider=({children})=>{
         })
     }
     const signup=()=>{
-        !!state.username&&state.password&&state.firstName&&state.lastName && dispatch({type:"signup"})
+        !!state.username&&!!state.password&&
+        !!state.firstName&&
+        !!state.lastName && dispatch({type:"signup"})
     }
-    const value={
-        state,
-        signin,
-        signup
-    }
+    const value=useMemo(()=>{
+        return {
+            state,
+            signin,
+            signup
+        }
+    } ,[])
+    
     
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
