@@ -1,6 +1,6 @@
 import axios  from "axios";
-import React, { useMemo, useReducer } from "react"
-import jwt_decode from "jwt-decode";
+import React, { useMemo, useReducer } from "react";
+import jwt_decode from "jwt-decode";
 
 const user={
     username:"",
@@ -8,7 +8,9 @@ const user={
     firstName:"",
     lastName:"",
     token:"",
-}
+};
+
+
 
 function reducer(state,action){
     switch(action.type){
@@ -46,15 +48,15 @@ function reducer(state,action){
               });
         }
         default:return state
-    }
-}
+    };
+};
 //creation du context 
 export const Context=React.createContext()
 
 
 //cretation du provider
 const Provider=({children})=>{
-    const[state ,dispatch]=useReducer(reducer ,user)
+    const[state ,dispatch]=useReducer(reducer ,user);
     const signin=()=>{
         !! state.username && state.password && dispatch({
             type:"signin"
@@ -64,14 +66,18 @@ const Provider=({children})=>{
         !!state.username&&!!state.password&&
         !!state.firstName&&
         !!state.lastName && dispatch({type:"signup"})
-    }
+    };
+    const regexUsername = new RegExp("^.{4,4}$|^.{5,5}$");
+    const regexPass = new RegExp("^(?=^[a-zA-Z!@#$%^&*]*[A-Z][a-zA-Z!@#$%^&*]*$)(?=^[a-zA-Z0-9]*[!@#$%^&*][a-zA-Z0-9]*$).{8}$");
     const value=useMemo(()=>{
         return {
             state,
             signin,
-            signup
+            signup,
+            regexPass,
+            regexUsername
         }
-    } ,[])
+    } ,[state.token])
     
     
     return <Context.Provider value={value}>{children}</Context.Provider>
