@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext ,useState} from 'react';
 import { Link } from 'react-router-dom';
 import {Context} from "../../Context"
 const Signin = () => {
-   const {state ,signin}=useContext(Context);
-  //console.log(value)
+   const {state ,signin,regexPass,regexUsername}=useContext(Context);
+   const [errorHandler ,setErrorHandler]=useState({
+    usernameError:"",
+    passwordError:"",
+    showAlert:false
+})
     return (
         <section className="py-5 bg-gray-50 sm:py-8 lg:py-12">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -11,7 +15,38 @@ const Signin = () => {
                 <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Bienvenue !</h2>
                 <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">connectez vous a votre compte</p>
             </div>
-    
+            {errorHandler.showAlert?
+            (<div className="py-12 bg-transparent">
+            <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                <div className="max-w-2xl mx-auto">
+                    <div className="border border-yellow-300 rounded-lg bg-yellow-50">
+                        <div className="p-3">
+                            <div className="flex items-start justify-between">
+                                <svg className="flex-shrink-0 w-5 h-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div className="ml-3">
+                                    <p className="text-sm font-bold text-yellow-900">Info</p>
+                                    <p className="text-sm mt-0.5 font-medium text-yellow-900">Vérifiez que les informations de connexion fournies sont celles qui ont été données lors de la création du compte.</p>
+                                </div>
+
+                                <div className="pl-3 ml-auto">
+                                    <button type="button" className="inline-flex bg-yellow-50 rounded-lg -m1.5 p-1.5 text-yellow-500 hover:bg-yellow-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-yellow-50 focus:ring-yellow-500" onClick={() => setErrorHandler({
+                                        ...errorHandler,
+                                        showAlert:false
+                                        })}>
+                                        <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>):null
+            }
             <div className="relative max-w-md mx-auto mt-8 md:mt-16">
                 <div className="overflow-hidden bg-white rounded-md shadow-md">
                     <div className="px-4 py-6 sm:px-8 sm:py-7">
@@ -31,7 +66,11 @@ const Signin = () => {
                                             name=""
                                             id=""
                                             onChange={(e)=>{
-                                               state.username = e.target.value;
+                                               state.username = e.target.value;  
+                                               setErrorHandler({
+                                                ...errorHandler,
+                                                usernameError:state.username
+                                               })
                                             }}
                                             placeholder="Entrez votre nom d' utilisateur"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
@@ -62,7 +101,12 @@ const Signin = () => {
                                             name=""
                                             id=""
                                             onChange={(e)=>{
-                                                state.password=e.target.value
+                                                state.password=e.target.value;
+                                                setErrorHandler({
+                                                    ...errorHandler,
+                                                    passwordError:state.password
+                                                })
+
                                             }}
                                             placeholder="Enter your password"
                                             className="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"
@@ -74,7 +118,14 @@ const Signin = () => {
                                     <button type="submit" 
                                         onClick={(e)=>{
                                             e.preventDefault();
-                                            signin()
+                                            if(!regexUsername.test(errorHandler.usernameError)&& !regexPass.test(errorHandler.passwordError)){
+                                                setErrorHandler({
+                                                    ...errorHandler,
+                                                   showAlert:true
+                                                })
+                                            }else{
+                                                signin()
+                                            }  
                                         }}
                                     className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         connectez-vous
