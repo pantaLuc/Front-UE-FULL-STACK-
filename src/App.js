@@ -8,6 +8,7 @@ import Signup from "./components/authentification/Signup"
 import ListCategorie from "./components/categorie/ListCategorie";
 import ListBoutique from "./components/boutique/ListBoutique";
 import ListProduits from "./components/produit/ListProduits";
+import Vendeur from "./pages/Vendeur";
 import Home from "./pages/Home";
 
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/categorie" element={<ListCategorie/>}></Route>
       <Route path="/boutique" element={<ListBoutique/>}></Route>
       <Route path="/produit" element={<ListProduits/>}></Route>
+      <Route path="/vendeur/*" element={<Vendeur/>}></Route>
      </Routes>
     <Footer/>
     </div>
