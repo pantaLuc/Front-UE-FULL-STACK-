@@ -124,7 +124,7 @@ const Signup = () => {
                                             }}
                                         />
                                     </div>
-                                    <span hidden={errorHandler.showPassError} className="text-base font-medium  text-yellow-900">Le mot de passe  doit faire aumoins 8 caracteres</span>
+                                    <span hidden={errorHandler.showPassError} className="text-base font-medium  text-yellow-900">Le mot de passe est de taille 8 avec 1 majuscules et 1 caractère special aumoins</span>
                                 </div>
     
                            
