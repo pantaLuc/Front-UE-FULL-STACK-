@@ -91,7 +91,17 @@ const NavBar = () => {
                     </Link>)
                 })
              }
+            
                 
+            <div>
+
+                <Link to="/signup" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                    Sign up
+                </Link>
+                <Link to="/signin" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                    Sign in
+                </Link>
+            </div>   
              
         </nav>
         
