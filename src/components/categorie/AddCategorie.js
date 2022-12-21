@@ -1,11 +1,16 @@
-import React , { useContext , useState} from 'react';
+import React , { useContext , useState , useEffect} from 'react';
 import {ContextCategorie} from "./ContextCategorie"
 
 
 const AddCategorie = () => {
     const [showModal, setShowModal] = React.useState(false);
 
-    const {state ,addcategorie}=useContext(ContextCategorie);
+    const {state ,addcategorie,allcategorie}=useContext(ContextCategorie);
+  
+    useEffect(() => {
+      state.listcategorie=allcategorie()
+      console.log(state.listcategorie)
+    },[]);
 
     return (
         <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
@@ -54,16 +59,19 @@ const AddCategorie = () => {
                     </thead>
 
                     <tbody>
-                    <tr class="bg-gray-50">
+                    {state.listcategorie?.map(categorie=>{
+
+                    return <tr class="bg-gray-50" >
                         <td class="whitespace-nowrap px-4 py-4 align-top text-sm font-bold text-gray-900 lg:align-middle">
-                        <div class="flex items-center">Beauté</div>
+                        <div class="flex items-center">{categorie.nom}</div>
                         <div class="mt-1 space-y-2 pl-11 font-medium lg:hidden">
                             <div class="flex items-center">0</div>
 
                             <div class="flex items-center space-x-4 pt-3">
                             <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">modifier</button>
 
-                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
                                 <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -98,6 +106,8 @@ const AddCategorie = () => {
                         </div>
                         </td>
                     </tr>
+                    
+                  })}
                     </tbody>
                 </table>
                 </div>

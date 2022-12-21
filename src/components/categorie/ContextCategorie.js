@@ -1,9 +1,10 @@
-import React, { useReducer } from "react"
+import React, { useCallback, useMemo, useReducer, useState } from "react"
 import axios  from "axios";
 
 const categorie={
     nom:"",
-    description:""
+    description:"",
+    listcategorie:[]
 }
 
 function reducer(state,action){
@@ -20,9 +21,9 @@ function reducer(state,action){
               });
         }
         case "allcategorie":{
-            return axios.get(`http://localhost:8080/categorie`)
+            return axios.get(`http://localhost:8080/categorie/list`)
                .then((response) => {
-                 console.log(response.data);
+                state.listcategorie=response.data
                }, (error) => {
                  console.log( "l'erreur " ,error.message);
                });
@@ -45,14 +46,18 @@ const ProviderCategorie=({children})=>{
     }
     const allcategorie=()=>{
         dispatch({
-            type:"allcategorie"
+            type:"allcategorie",
+            payload:state.listcategorie
         })
     }
-    const value={
-        state,
-        addcategorie,
-        allcategorie
-    }
+    const value=useMemo(()=>{
+        return {
+            state,
+            addcategorie,
+            allcategorie
+        }
+    },[state.listcategorie])
+    
     return <ContextCategorie.Provider value={value}>{children}</ContextCategorie.Provider>
 }
 
