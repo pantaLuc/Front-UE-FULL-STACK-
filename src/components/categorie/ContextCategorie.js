@@ -16,7 +16,7 @@ const categorie={
 function reducer(state,action){
     switch(action.type){
         case "addcategorie":{
-           return axios.post(`http://localhost:8080/categorie`, {
+           return axios.post(`${process.env.REACT_APP_API_URL}/categorie`, {
                 nom: state.nom,
                 description: state.description
               })
@@ -27,7 +27,7 @@ function reducer(state,action){
               });
         }
         case "updatecategorie":{
-           return axios.put(`http://localhost:8080/categorie`, state.categorieupdate)
+           return axios.put(`${process.env.REACT_APP_API_URL}/categorie`, state.categorieupdate)
               .then((response) => {
                 window.location.reload();
               }, (error) => {
@@ -35,7 +35,7 @@ function reducer(state,action){
               });
         }
         case "delcategorie":{
-            return axios.delete(`http://localhost:8080/categorie?id=${state.iddelete}`)
+            return axios.delete(`${process.env.REACT_APP_API_URL}/categorie?id=${state.iddelete}`)
                .then((response) => {
                  window.location.reload();
                  console.log(response.data);
@@ -77,7 +77,7 @@ const ProviderCategorie=({children})=>{
         })
     };
     const allcategorie= async()=>{
-       await axios.get(`http://localhost:8080/categorie/list`).then((response)=>{
+       await axios.get(`${process.env.REACT_APP_API_URL}/categorie/list`).then((response)=>{
         setData(response.data);
         setPageCount(Math.ceil(response.data.length/perPage))
        }).catch((error)=>{
