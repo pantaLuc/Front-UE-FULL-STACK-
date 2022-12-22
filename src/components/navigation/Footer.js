@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from'../../images/fullStack.png'
 const Footer = () => {
     return (
-        <footer className="pt-12 pb-8 bg-transparent sm:pt-16 lg:pt-20">
+        <footer className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div className="px-4 mx-auto lg:px-8 sm:px-6 max-w-7xl">
         <div className="grid grid-cols-1 gap-y-12 sm:gap-x-8 sm:gap-y-16 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 lg:gap-x-12 xl:gap-x-16">
             <div className="lg:col-span-2 sm:col-span-3 xl:col-span-3">

@@ -23,7 +23,7 @@ const NavBar = () => {
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
        
-        <nav className="relative flex items-center justify-between h-16 bg-transparent lg:rounded-md lg:shadow-lg lg:h-24 lg:px-8 lg:py-6">
+        <nav className="relative flex items-center justify-between h-16 bg-white lg:rounded-md lg:shadow-lg lg:h-24 lg:px-8 lg:py-6">
             <div className="flex-shrink-0">
                 <Link href="/"  to ="/" title="" className="flex">
                     <img className="w-auto h-9 lg:h-11" src={logo} alt="" />

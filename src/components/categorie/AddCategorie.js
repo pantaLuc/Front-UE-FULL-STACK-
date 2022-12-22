@@ -1,19 +1,28 @@
 import React , { useContext , useState , useEffect} from 'react';
 import {ContextCategorie} from "./ContextCategorie"
-
+import ReactPaginate from 'react-paginate';
 const AddCategorie = () => {
     const [showModal, setShowModal] = React.useState(false);
     const [firstRender ,setFirstRender]=useState(false)
-    const {state ,addcategorie,allcategorie,data}=useContext(ContextCategorie);
+    const [offset, setOffset] = useState(0);
+    
+    
+    const {state ,addcategorie,allcategorie,data,pageCount,perPage}=useContext(ContextCategorie);
+    
     useEffect(() => {
         if (!firstRender) {
             allcategorie();
-            setFirstRender(true)
+            setFirstRender(true) 
         }
-    }, [firstRender])
-   console.log(state.listcategorie)
+    }, [firstRender ,offset,allcategorie])
+    const slice = data?.slice(offset, offset + perPage)
+    
+    const handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        setOffset(selectedPage + 1)
+    };
+   
     return (
-        
         <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
         <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
         <div class="bg-white py-12 sm:py-16 lg:py-20">
@@ -61,7 +70,7 @@ const AddCategorie = () => {
 
                     <tbody>
 
-                    {data?.map(categorie=>{
+                    {slice?.map(categorie=>{
 
                     return <tr class="bg-gray-50" >
                         <td class="whitespace-nowrap px-4 py-4 align-top text-sm font-bold text-gray-900 lg:align-middle">
@@ -112,11 +121,29 @@ const AddCategorie = () => {
                   })}
                     </tbody>
                 </table>
+                <ReactPaginate
+                    className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl py-3 bg-white center"
+                    previousLabel={"<<"}
+                    previousClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    pageClassName=""
+                    nextLabel={">>"}
+                    nextLinkClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName="relative flex justify-center -space-x-px rounded-md"
+                    subContainerClassName=""
+                    disabledClassName=''
+                    activeClassName="relative z-10 inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-900 bg-white border border-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"/>
                 </div>
             </div>
             </div>
         </div>
         </div>
+
         </div>
       {showModal ? (
         <>

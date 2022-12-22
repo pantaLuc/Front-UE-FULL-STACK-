@@ -15,6 +15,7 @@ function reducer(state,action){
                 description: state.description
               })
               .then((response) => {
+                window.location.reload();
                 console.log(response.data);
               }, (error) => {
                 console.log( "l'erreur " ,error.message);
@@ -34,33 +35,40 @@ export const ContextCategorie=React.createContext()
 
 //cretation du provider
 const ProviderCategorie=({children})=>{
-    const[state ,dispatch]=useReducer(reducer ,categorie)
-    const[data ,setData]=useState([])
+    const[state ,dispatch]=useReducer(reducer ,categorie);
+    const[data ,setData]=useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [perPage] = useState(10);
     const addcategorie=()=>{
         !! state.nom && state.description && dispatch({
             type:"addcategorie"
         })
-    }
+    };
     const allcategorie= async()=>{
-       let tab=await axios.get(`http://localhost:8080/categorie/list`)
-        .then((response) => {
-            setData(response.data)
-        }, (error) => {
-          console.log( "l'erreur " ,error.message);
-        });
+       await axios.get(`http://localhost:8080/categorie/list`).then((response)=>{
+        setData(response.data);
+        setPageCount(Math.ceil(response.data.length/perPage))
+       }).catch((error)=>{
+        console.log( "l'erreur " ,error.message);
+       });
+
+
+       
         dispatch({
             type:"allcategorie",
             data
         })
-    }
+    };
     const value=useMemo(()=>{
         return {
             state,
             data,
+            pageCount,
+            perPage,
             addcategorie,
             allcategorie
         }
-    },[state ,addcategorie ,allcategorie ,data])
+    },[state ,addcategorie ,allcategorie ,data ,perPage ,pageCount])
     
     return <ContextCategorie.Provider value={value}>{children}</ContextCategorie.Provider>
 }
