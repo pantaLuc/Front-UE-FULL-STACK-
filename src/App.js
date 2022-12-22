@@ -10,7 +10,7 @@ import ListBoutique from "./components/boutique/ListBoutique";
 import ListProduits from "./components/produit/ListProduits";
 import Vendeur from "./pages/Vendeur";
 import Home from "./pages/Home";
-
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -24,6 +24,8 @@ function App() {
       <Route path="/boutique" element={<ListBoutique/>}></Route>
       <Route path="/produit" element={<ListProduits/>}></Route>
       <Route path="/vendeur/*" element={<Vendeur/>}></Route>
+
+      <Route path="/admin/*" element={<Admin/>}></Route>
      </Routes>
     <Footer/>
     </div>
