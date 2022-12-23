@@ -1,24 +1,18 @@
-import React from 'react';
+import React ,{ useContext, useState , useEffect} from 'react';
 import Pagination from '../Pagination';
+import {ContextCategorie} from "./ContextCategorie"
+
 
 const ListCategorie = () => {
-    const categorie=[
-        {
-            image:"",
-            nom:"Chaussure",
-            nombrePrduit:122
-        },
-        {
-            image:"",
-            nom:"Literie",
-            nombrePrduit:112
-        },
-        {
-            image:"",
-            nom:"Beauté",
-            nombrePrduit:2
-        } 
-    ]
+    const [firstRender ,setFirstRender]=useState(false)
+    
+    const {state ,addcategorie,delcategorie,allcategorie,updatecategorie,data,pageCount,perPage}=useContext(ContextCategorie);
+    useEffect(() => {
+        if (!firstRender) {
+            allcategorie();
+            setFirstRender(true) 
+        }
+    }, [firstRender,allcategorie])
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -29,9 +23,9 @@ const ListCategorie = () => {
             <div className="grid grid-cols-1 gap-5 mt-8 sm:mt-12 sm:grid-cols-2 xl:grid-cols-3 sm:gap-8 xl:gap-12">
                
                 {
-                    categorie?.map(({image ,nom,nombreProduit} ,id)=>{
+                    data?.map(categorie=>{
                         return( 
-                        <div  key={id} className="relative overflow-hidden transition-all duration-200 bg-gray-100 rounded-xl hover:bg-gray-200">
+                        <div className="relative overflow-hidden transition-all duration-200 bg-gray-100 rounded-xl hover:bg-gray-200">
                         <div className="p-6 lg:px-10 lg:py-8">
                             <div className="flex items-center justify-start space-x-8">
                                 <svg className="flex-shrink-0 w-10 h-10 text-gray-600 md:w-12 md:h-12" viewBox="0 0 60 60" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -43,11 +37,11 @@ const ListCategorie = () => {
                                 <div>
                                     <h3 className="text-sm font-bold text-gray-900 sm:text-base lg:text-lg">
                                         <a href="#" title="">
-                                            {nom}
+                                            {categorie.nom}
                                             <span className="absolute inset-0" aria-hidden="true"></span>
                                         </a>
                                     </h3>
-                                    <p className="mt-2 text-sm font-medium text-gray-500"> {toString(nombreProduit)} Disponible</p>
+                                    <p className="mt-2 text-sm font-medium text-gray-500">  {categorie.description}</p>
                                 </div>
                             </div>
                         </div>
