@@ -10,6 +10,7 @@ import ListBoutique from "./components/boutique/ListBoutique";
 import ListProduits from "./components/produit/ListProduits";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
+import ProviderCategorie from './components/categorie/ContextCategorie'
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/signin" element={<Signin/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
-      <Route path="/categorie" element={<ListCategorie/>}></Route>
+      <Route path="/categorie" element={<ProviderCategorie><ListCategorie/></ProviderCategorie>}></Route>
       <Route path="/boutique" element={<ListBoutique/>}></Route>
       <Route path="/produit" element={<ListProduits/>}></Route>
       <Route path="/admin/*" element={<Admin/>}></Route>
