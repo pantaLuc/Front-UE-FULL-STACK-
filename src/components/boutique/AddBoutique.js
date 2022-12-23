@@ -100,7 +100,7 @@ const AddBoutique = () => {
         </div>
       </form>
       <div className="w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 text-center p-8">
-      <button class="h-14 px-5 shadow-lg shadow-black text-indigo-700 transition-colors duration-150 border border-indigo-500 rounded-lg focus:shadow-outline hover:bg-indigo-500 hover:text-indigo-100">Ajoutez la boutique</button>
+      <button class="h-14 px-5 shadow-lg shadow-black text-red-700 transition-colors duration-150 border border-indigo-500 rounded-lg focus:shadow-outline hover:bg-indigo-500 hover:text-indigo-100">Ajoutez la boutique</button>
       </div>
     </div>
   );
