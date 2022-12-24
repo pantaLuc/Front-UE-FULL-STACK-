@@ -43,32 +43,7 @@ const AddBoutique = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                    <div className="max-w-xl mx-auto">
-                      <div>
-                        <label
-                          htmlFor=""
-                          className="block text-sm font-bold text-gray-900"
-                        >
-                          {" "}
-                          Image Boutique{" "}
-                        </label>
-                        <div className="relative flex mt-2">
-                          <div className="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">
-                            https://
-                          </div>
-
-                          <input
-                            type="url"
-                            name=""
-                            id=""
-                            placeholder="example.com"
-                            className="flex-1 border block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                   <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                     <div className="max-w-xl mx-auto">
                       <div>

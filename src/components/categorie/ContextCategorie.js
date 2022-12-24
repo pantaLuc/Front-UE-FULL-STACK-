@@ -51,8 +51,6 @@ const ProviderCategorie=({children})=>{
        }).catch((error)=>{
         console.log( "l'erreur " ,error.message);
        });
-
-
        
         dispatch({
             type:"allcategorie",
