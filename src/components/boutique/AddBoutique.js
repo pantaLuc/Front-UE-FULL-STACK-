@@ -67,7 +67,7 @@ const AddBoutique = () => {
             }
       <form action="#" method="POST">
         <div className="grid grid-flow-row sm:grid-flow-col gap-3 justify-center w-full h-full px-4 py-5 sm:p-4">
-          <div className="flex justify-center text-3xl border-2 border-transparent rounded-xl p-6 bg-transparent shadow-lg">
+          <div className="flex justify-center text-3xl border-2 border-transparent rounded-xl p-6 bg-transparent">
             <div className="bg-white py-4 sm:py-3 lg:py-5">
               <div>
                 <p className="text-base font-bold text-gray-900"></p>
