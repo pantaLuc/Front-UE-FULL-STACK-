@@ -1,38 +1,33 @@
 import { React, useState ,useContext, useEffect} from "react";
 import { MultiSelect } from "react-multi-select-component";
 import {ContextBoutique} from "./ContextBoutique"
-import LigneisteBoutique from "./LigneListeBoutique"
+import LigneListeBoutique from "./LigneListeBoutique"
 
 
 const AddHoraire = (props) => {
   const [firstRender ,setFirstRender]=useState(false)
   const [lisIdHoraire ,setLisIdHoraire]=useState([])
-  const [idlundi ,setIdLundi]=useState();
-  const [idmardi ,setIdMardi]=useState();
-  const [idmercredo ,setIdMercredi]=useState();
-  const [jours, setjours] = useState({
-    lundi:'',
-  mardi:'',
-  mercredi:''
-  });
   const {state ,allintervalle,data}=useContext(ContextBoutique);
   useEffect(() => {
     if (!firstRender) {
       allintervalle();
       setFirstRender(true)
     }
-}, [firstRender ,allintervalle]);
+    const unique = lisIdHoraire.filter((obj, index) => {
+      return index === lisIdHoraire.findIndex(o => obj.id === o.id );
+    });
+    (unique.length==7 && props.listHoraire(unique))
+    console.log(unique.length);
+
+}, [firstRender ,allintervalle,data]);
 let options = data.map(item => ({
   label: item.ouverture +"-"+ item.fermeture,
   value: item.id
 }));
 console.log(options)
 
-
-  
   return (
     <div className="bg-white py-4 sm:py-16 lg:py-5">
-      {console.log(jours)}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div>
           <p className="text-base font-bold text-gray-900">
@@ -66,24 +61,32 @@ console.log(options)
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-                <LigneisteBoutique jour="LUNDI" idhorairevalidate={(e)=>setjours((prevState) => ({
-                ...prevState,
-                lundi: e,
-              }))}/>
-                <LigneisteBoutique jour="MARDI" idhorairevalidate={(e)=>setjours((prevState) => ({
-                ...prevState,
-                mardi: e,
-              }))}/>
-                <LigneisteBoutique jour="MERCREDI" idhorairevalidate={(e)=>setjours((prevState) => ({
-                ...prevState,
-                mercredi: e,
-              }))}/>
-               
+                <LigneListeBoutique jour="LUNDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="MARDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="MERCREDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="JEUDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="VENDREDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="SAMEDI" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
+                <LigneListeBoutique jour="DIMANCHE" idhorairevalidate={
+                   (e)=>lisIdHoraire.push({id:e}) 
+                }/>
             </tbody>
           </table>
         </div>
       </div>
-      
+    
     </div>
   );
 };
