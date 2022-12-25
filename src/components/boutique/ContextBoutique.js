@@ -10,10 +10,18 @@ const boutique={
     intervalleHeure:[],
     estEnCongé:false,
     listintervalle:[],
+    ouverture:"",
+    fermeture:""
 }
 
 function reducer(state,action){
     switch(action.type){
+        case "addboutique":{
+            return {...state}
+         }
+        case "addintervalle":{
+            return {...state}
+         }
         case "addhoraire":{
             return {...state}
          }
@@ -34,6 +42,38 @@ const ProviderBoutique=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,boutique)
     const[data ,setData]=useState([]);
     const[idhoraire ,setIdhoraire]=useState();
+    const addboutique=async()=>{
+       await axios.post(`http://localhost:8080/boutique/create`, {
+                nom: state.nom,
+                dateCreationBoutique: state.dateCreationBoutique,
+                horaireList: state.horaireList,
+                utilisateur: state.utilisateur
+               })
+               .then((response) => {
+                window.location.reload();
+                 console.log(response.data);
+               }, (error) => {
+                 console.log( "l'erreur " ,error.message);
+               });
+        dispatch({
+            type:"addboutique"
+        })
+    };
+    const addintervalle=async()=>{
+       await axios.post(`http://localhost:8080/intervalleheure`, {
+                ouverture: state.ouverture,
+                fermeture: state.fermeture
+               })
+               .then((response) => {
+                //window.location.reload();
+                 console.log(response.data);
+               }, (error) => {
+                 console.log( "l'erreur " ,error.message);
+               });
+        dispatch({
+            type:"addintervalle"
+        })
+    };
     const addhoraire=async()=>{
        await axios.post(`http://localhost:8080/horaire/create`, {
                 joursemaine: state.joursemaine,
@@ -68,9 +108,11 @@ const ProviderBoutique=({children})=>{
             data,
             idhoraire,
             allintervalle,
-            addhoraire
+            addhoraire,
+            addboutique,
+            addintervalle
         }
-    },[state.listintervalle,addhoraire,allintervalle])
+    },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle])
     
     return <ContextBoutique.Provider value={value}>{children}</ContextBoutique.Provider>
 }
