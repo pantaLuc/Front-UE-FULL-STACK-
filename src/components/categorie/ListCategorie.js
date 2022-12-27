@@ -19,17 +19,25 @@ const ListCategorie = () => {
         const selectedPage = e.selected;
         setOffset(selectedPage + 1)
     };
+    const [searchField, setsearchField] = useState('');
+    const filtreedcategory=slice.filter(category=>(
+      category.nom.toLowerCase().includes(searchField.toLowerCase())
+  ));
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">Selectionez une  Categorie pour debuter</h2>
             </div>
-    
+            <div class="mt-4 flex items-center justify-center sm:mt-0 sm:justify-end sm:space-x-7 ">
+            <input type="text" name="" id="" placeholder="Chercher" className=" m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+                          onChange={(e)=>setsearchField(e.target.value)}
+             />
+            </div>
             <div className="grid grid-cols-1 gap-5 mt-8 sm:mt-12 sm:grid-cols-2 xl:grid-cols-3 sm:gap-8 xl:gap-12">
                
                 {
-                    slice?.map(categorie=>{
+                    filtreedcategory?.map(categorie=>{
                         return( 
                         <div className="relative overflow-hidden transition-all duration-200 bg-gray-100 rounded-xl hover:bg-gray-200">
                         <div className="p-6 lg:px-10 lg:py-8">
