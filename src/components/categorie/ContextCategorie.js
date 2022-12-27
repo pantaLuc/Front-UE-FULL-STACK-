@@ -95,6 +95,7 @@ const ProviderCategorie=({children})=>{
             })
     },[data ,perPage])
     
+
     const value=useMemo(()=>{
         return {
             state,
