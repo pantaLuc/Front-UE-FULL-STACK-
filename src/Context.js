@@ -1,13 +1,13 @@
 import axios  from "axios";
-import React, { useMemo, useReducer } from "react";
+import React, { useMemo, useReducer, useState } from "react";
 import jwt_decode from "jwt-decode";
+import { useCallback } from "react";
 
 const user={
     username:"",
     password:"",
     firstName:"",
     lastName:"",
-    token:"",
 };
 
 
@@ -15,37 +15,14 @@ const user={
 function reducer(state,action){
     switch(action.type){
         case "signin":{
-           return axios.post(`http://localhost:8080/user/signin`, {
-                username: state.username,
-                password: state.password
-              })
-              .then((response) => {
-                state.token=response.data;
-                 const jwt=jwt_decode(state.token)
-               //  const date=new Date(jwt)
-                 if(jwt.roles[0].authority){
-                    console.log("c'est un admin")
-                 }else{
-                    console.log("c'est un Vendeur-livreur")
-                 }
-               
-              }, (error) => {
-                console.log( "l' erreur " ,error.message);
-              });
+           return {
+            ...state
+           }
         }
         case "signup":{
-            axios.post(`http://localhost:8080/user/signup`, {
-                username: state.username,
-                password: state.password,
-                firstName:state.firstName,
-                lastName:state.lastName
-                
-              })
-              .then((response) => {
-                console.log(response)
-              }, (error) => {
-                console.log( "l' erreur " ,error.message);
-              });
+           return {
+            ...state
+           }
         }
         default:return state
     };
@@ -57,17 +34,54 @@ export const Context=React.createContext()
 //cretation du provider
 const Provider=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,user);
-    const signin=()=>{
-        !! state.username && state.password && dispatch({
-            type:"signin"
-        })
-    }
-    const signup=()=>{
+    const[token , setToken]=useState()
+
+    const signin=useCallback(async()=>{
+      !! state.username && state.password &&
+      await axios.post(`http://localhost:8080/user/signin`, {
+         username: state.username,
+         password: state.password
+       })
+       .then((response) => {
+         const data=response.data;
+          const jwt=jwt_decode(data)
+        //  const date=new Date(jwt)
+        setToken(data)
+        console.log(jwt.roles[0].authority)
+          if(jwt.roles[0].authority==="Admin"){
+             console.log("c'est un admin")
+          }else{
+             console.log("c'est un Vendeur-livreur")
+          }
+        
+       }, (error) => {
+         console.log( "l' erreur " ,error.message);
+       });
+       dispatch({
+           type:"signin"
+       })
+    },[token])
+   
+    const signup=async ()=>{
         !!state.username&&!!state.password&&
         !!state.firstName&&
-        !!state.lastName && dispatch({type:"signup"})
+        !!state.lastName && 
+        await axios.post(`http://localhost:8080/user/signup`, {
+          username: state.username,
+          password: state.password,
+          firstName:state.firstName,
+          lastName:state.lastName
+          
+        })
+        .then((response) => {
+          console.log(response)
+        }, (error) => {
+          console.log( "l' erreur " ,error.message);
+        });
+        
+        dispatch({type:"signup"})
     };
-    const regexUsername = new RegExp("^.{4,4}$|^.{5,5}$");
+    const regexUsername = new RegExp("^.{4,4}$|^.{8,8}$");
     const regexPass = new RegExp("^(?=^[a-zA-Z!@#$%^&*]*[A-Z][a-zA-Z!@#$%^&*]*$)(?=^[a-zA-Z0-9]*[!@#$%^&*][a-zA-Z0-9]*$).{8}$");
     const value=useMemo(()=>{
         return {
@@ -75,9 +89,10 @@ const Provider=({children})=>{
             signin,
             signup,
             regexPass,
-            regexUsername
+            regexUsername,
+            token
         }
-    } ,[state.token])
+    } ,[token ,signin])
     
     
     return <Context.Provider value={value}>{children}</Context.Provider>
