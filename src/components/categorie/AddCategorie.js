@@ -28,13 +28,13 @@ const AddCategorie = () => {
    
     return (
         <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
-        <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
+        <div className="flex items-center justify-center w-full h-full px-3 py-4 sm:p-4">
         <div class="bg-white py-12 sm:py-16 lg:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center sm:justify-between">
             <div>
-                <p class="text-xl font-bold text-gray-900">Categories</p>
-                <p class="mt-1 text-sm font-medium text-gray-500">Lorem ipsum dolor sit amet, consectetur adipis.</p>
+                <p class="text-xl font-bold text-gray-900 m-3">Categories</p>
+              
             </div>
 
             <div class="mt-4 flex items-center justify-start sm:mt-0 sm:justify-end sm:space-x-7">
@@ -45,87 +45,76 @@ const AddCategorie = () => {
                 </svg> Ajouter Categorie
                 </button>
             </div>
+            <div class="mt-4 flex items-center justify-start sm:mt-0 sm:justify-end sm:space-x-7">
+            <input type="text" name="" id="" placeholder="Chercher" className="hidden m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+                          onChange={(e)=>setsearchField(e.target.value)}
+                          />
+            </div>
+            
             </div>
 
             <div class="mt-4 flex flex-col lg:mt-8">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <table class="min-w-full lg:divide-y lg:divide-gray-200">
-                    <thead class="hidden lg:table-header-group">
-                    <tr>
-                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-3 lg:-mx-5">
+                <div className="bg-white  rounded my-6">
+                <table className="min-w-max w-full table-auto">
+                    <thead class="">
+                    <tr className='bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
+                        <th className="py-3 px-6 text-left">
                           nom</th>
 
-                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">description</th>
+                        <th class="py-3 px-6 text-left">description</th>
 
-                        <th class="relative py-3.5 pl-4 pr-4 md:pr-0">
+                        <th class="py-3 px-6 text-center">
                         Actions
-                        <input type="text" name="" id="" placeholder="Chercher" className="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
-                          onChange={(e)=>setsearchField(e.target.value)}
-                          />
                         </th>
                     </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody className="text-gray-600 text-sm font-light">
 
                     {filtreedcategory?.map(categorie=>{
 
-                    return <tr class="bg-gray-50" >
-                        <td class="whitespace-nowrap px-4 py-4 align-top text-sm font-bold text-gray-900 lg:align-middle">
-                        <div class="flex items-center">{categorie.nom}</div>
-                        <div class="mt-1 space-y-2 pl-11 font-medium lg:hidden">
-                            <div class="flex items-center space-x-4 pt-3">
-                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
-                              Modifier</button>
-
-                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={(e)=>{
-                              state.iddelete=categorie.id
-                                e.preventDefault();
-                                delcategorie();
-                            }
-                            }
-                            >
-                                <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                supprimer
-                            </button>
-                            </div>
-                        </div>
+                    return <tr class="border-b border-gray-200 hover:bg-gray-100" >
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                        <div class="flex items-center">
+                          
+                          <span className="font-medium">{categorie.nom}</span>
+                          </div>
+            
                         </td>
 
-                        <td class="hidden whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900 lg:table-cell">
-                        <div class="flex items-center">{categorie.description}</div>
+                        <td class="py-3 px-6 text-left ">
+                        <div class="flex items-center">
+                          <span className="">
+                          {categorie.description.length>95?categorie.description.substring(0,95)+"..":categorie.description }
+                          </span>
+                        
+                          </div>
                         </td>
 
-                        <td class="hidden whitespace-nowrap px-4 py-4 lg:table-cell">
-                        <div class="flex items-center space-x-4">
-                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        <td class="py-3 px-6 text-center ">
+                        <div class="flex item-center justify-center">
+                            <button type="button" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                             onClick={(e) =>{ 
                             state.categorieupdate=categorie;
                             setShowModalupdate(true)
                             }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                            </svg>
-                            Modifier</button>
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                             </svg>
+                          </button>
 
-                            <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            <button type="button" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                             onClick={(e)=>{
                               state.iddelete=categorie.id
                                 e.preventDefault();
                                 delcategorie();
                             }
                             }>
-                            <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                            Supprimer
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                             </svg>
+                           
                             </button>
                         </div>
                         </td>
@@ -135,22 +124,15 @@ const AddCategorie = () => {
                     </tbody>
                 </table>
                 <ReactPaginate
-                    className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl py-3 bg-white center"
                     previousLabel={"<<"}
                     previousClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    pageClassName=""
                     nextLabel={">>"}
-                    nextLinkClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
+                    nextLinkClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
                     onPageChange={handlePageClick}
-                    containerClassName="relative flex justify-center -space-x-px rounded-md"
-                    subContainerClassName=""
-                    disabledClassName=''
-                    activeClassName="relative z-10 inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-900 bg-white border border-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"/>
+                    containerClassName="flex cursor-pointer list-none justify-center space-x-6 p-5"
+                    disabledClassName='border-2 border-solid  px-2 py-2'
+                    activeClassName="border-2 border-solid  px-2 py-2"/>
                 </div>
             </div>
             </div>

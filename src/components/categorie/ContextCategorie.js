@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useReducer, useState } from "react"
+import React, {  useCallback, useMemo, useReducer, useState } from "react"
 import axios  from "axios";
 
 const categorie={
@@ -16,15 +16,9 @@ const categorie={
 function reducer(state,action){
     switch(action.type){
         case "addcategorie":{
-           return axios.post(`${process.env.REACT_APP_API_URL}/categorie`, {
-                nom: state.nom,
-                description: state.description
-              })
-              .then((response) => {
-                window.location.reload();
-              }, (error) => {
-                console.log( "l'erreur " ,error.message);
-              });
+           return {
+            ...state
+           }
         }
         case "updatecategorie":{
            return axios.put(`${process.env.REACT_APP_API_URL}/categorie`, state.categorieupdate)
@@ -60,9 +54,19 @@ const ProviderCategorie=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,categorie);
     const[data ,setData]=useState([]);
     const [pageCount, setPageCount] = useState(0);
-    const [perPage] = useState(5);
-    const addcategorie=()=>{
-        !! state.nom && state.description && dispatch({
+    const [perPage] = useState(9);
+    const addcategorie=async()=>{
+        !! state.nom && state.description && 
+        await axios.post(`${process.env.REACT_APP_API_URL}/categorie`, {
+            nom: state.nom,
+            description: state.description
+          })
+          .then((response) => {
+            window.location.reload();
+          }, (error) => {
+            console.log( "l'erreur " ,error.message);
+          });
+        dispatch({
             type:"addcategorie"
         })
     };
@@ -76,19 +80,21 @@ const ProviderCategorie=({children})=>{
             type:"updatecategorie"
         })
     };
-    const allcategorie= async()=>{
-       await axios.get(`${process.env.REACT_APP_API_URL}/categorie/list`).then((response)=>{
-        setData(response.data);
-        setPageCount(Math.ceil(response.data.length/perPage))
-       }).catch((error)=>{
-        console.log( "l'erreur " ,error.message);
-       });
-
-        dispatch({
-            type:"allcategorie",
-            data
-        })
-    };
+    const allcategorie=useCallback(async()=>{
+        await axios.get(`${process.env.REACT_APP_API_URL}/categorie/list`).then((response)=>{
+            setData(response.data);
+            setPageCount(Math.ceil(response.data.length/perPage))
+           
+           }).catch((error)=>{
+            console.log( "l'erreur " ,error.message);
+           });
+    
+            dispatch({
+                type:"allcategorie",
+                data
+            })
+    },[data ,perPage])
+    
     const value=useMemo(()=>{
         return {
             state,
@@ -100,7 +106,7 @@ const ProviderCategorie=({children})=>{
             allcategorie,
             updatecategorie
         }
-    },[state ,addcategorie ,allcategorie ,data ,perPage ,pageCount])
+    },[allcategorie ,data, perPage])
     
     return <ContextCategorie.Provider value={value}>{children}</ContextCategorie.Provider>
 }
