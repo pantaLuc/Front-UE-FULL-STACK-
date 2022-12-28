@@ -3,6 +3,7 @@ import React, { useMemo, useReducer, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useCallback } from "react";
 
+
 const user={
     username:"",
     password:"",
@@ -46,6 +47,7 @@ const Provider=({children})=>{
          const data=response.data;
           const jwt=jwt_decode(data)
         //  const date=new Date(jwt)
+        localStorage.setItem('data',JSON.stringify(data))
         setToken(data)
         console.log(jwt.roles[0].authority)
           if(jwt.roles[0].authority==="Admin"){
