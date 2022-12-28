@@ -1,11 +1,48 @@
-import React ,{ useState ,useContext}from 'react';
+import React ,{ useState ,useContext ,useEffect} from 'react';
 import {ContextProduit} from "./ContextProduit"
+import {ContextCategorie} from '../categorie/ContextCategorie'
+import {ContextBoutique} from '../boutique/ContextBoutique'
+import { MultiSelect } from "react-multi-select-component";
+import jwt_decode from "jwt-decode";
+import Select from 'react-select';
 
 
 const AddProduit = () => {
+    const datauser =JSON.parse(localStorage.getItem("data"));
+    const user= datauser?jwt_decode(datauser):"";
+    const [selectedCat, setSelectedCat] = useState([]);
+    const [selectedBoutique, setSelectedBoutique] = useState("");
     const [showModal, setShowModal] = React.useState(false);
-    const {state ,addproduit,allproduit}=useContext(ContextProduit);
-
+    const {state ,addproduit,allproduit,produitlist}=useContext(ContextProduit);
+    const {allcategorie,data}=useContext(ContextCategorie);
+    const {allboutique,datalisteboutique,datalisteboutiquebyuser,allboutiquebyuser}=useContext(ContextBoutique);
+    const [firstRender ,setFirstRender]=useState(false);
+    useEffect(() => {
+      
+      if (!firstRender) {
+          allcategorie();
+          allboutique();
+          allboutiquebyuser(user.sub);
+          allproduit();
+          setFirstRender(true) 
+      }
+      console.log(produitlist)
+    }, [firstRender ,allcategorie,allproduit])
+    let optionscat = data.map(categorie => ({
+      label: categorie.nom,
+      value: categorie.id
+    }));
+    let optionsbout = datalisteboutiquebyuser.map(boutique => ({
+      label: boutique.nom,
+      value: boutique.id
+    }));
+    const ajouterproduit=async(e)=>{
+      e.preventDefault();
+      state.boutique={id:selectedBoutique.value}
+      state.categorieList = selectedCat.map(categorie => ({id:categorie.value}));
+      await addproduit();
+      setShowModal(false);
+    }
     return (
         <div className=" bg-gray-100">
        <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
@@ -14,7 +51,6 @@ const AddProduit = () => {
             <div class="sm:flex sm:items-center sm:justify-between">
             <div>
                 <p class="text-xl font-bold text-gray-900">Produits</p>
-                <p class="mt-1 text-sm font-medium text-gray-500">Lorem ipsum dolor sit amet, consectetur adipis.</p>
             </div>
 
             <div class="mt-4 flex items-center justify-start sm:mt-0 sm:justify-end sm:space-x-7">
@@ -25,12 +61,6 @@ const AddProduit = () => {
                 </svg> Ajouter Produit
                 </button>
 
-                <div class="inline-flex items-center justify-end">
-                <label for="sort" class="text-base font-medium text-gray-900 sm:text-sm"> trier: </label>
-                <select id="sort" name="sort" class="block w-full rounded-lg border-none border-gray-300 py-2 pl-1 pr-10 text-base focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 sm:text-sm">
-                    <option>plus</option>
-                </select>
-                </div>
             </div>
             </div>
 
@@ -44,12 +74,52 @@ const AddProduit = () => {
 
                         <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">description</th>
 
+                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">catégorie (s) </th>
+
+                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">prix</th>
+
+                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">Boutique</th>
+
+                        <th class="py-3.5 px-4 text-left text-xs font-medium uppercase tracking-widest text-gray-500">Qte</th>
+
                         <th class="relative py-3.5 pl-4 pr-4 md:pr-0">
                         <span class="sr-only"> Actions </span>
                         </th>
                     </tr>
                     </thead>
-
+                    <tbody className="text-gray-600 text-sm font-light">
+                    {produitlist.map(produit => (
+                      <tr class="border-b border-gray-200 hover:bg-gray-100" >
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center"><span className="font-medium">{produit.nom}</span></div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center"><span className="font-medium">{produit.description}</span></div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center">
+                          {produit.categorieList?produit.categorieList.map(categorie => (
+                            <span className="font-medium">*{categorie.nom}</span>
+                            
+                          )):""}
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center"><span className="font-medium">{produit.prix}</span></div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center">
+                            <span className="font-medium">{produit.boutique.nom}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center"><span className="font-medium">{produit.quantité}</span></div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                          <div class="flex items-center"><span className="font-medium">xxx</span></div>
+                        </td>
+                        </tr>))}
+                      </tbody>
                     
                 </table>
                 </div>
@@ -142,20 +212,24 @@ const AddProduit = () => {
                             <div>
                                 <label for="" className="text-sm font-bold text-gray-900"> Categorie </label>
                                 <div className="mt-1">
-                                    <select className="block w-full py-1 pl-3 pr-5 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm form-multiselect"  multiple>
-                                        <option>Maroquirie Ichraq</option>
-                                        <option>Zara</option>
-                                    </select>
+                                      <MultiSelect 
+                                        options={optionscat}
+                                        value={selectedCat}
+                                        onChange={setSelectedCat}
+                                        labelledBy="Select"
+                                      />
                                 </div>
                             </div>
                             
                             <div>
                                 <label for="" className="text-sm font-bold text-gray-900"> Boutique </label>
                                 <div className="mt-1">
-                                    <select className="block w-full py-3 pl-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm">
-                                        <option>Maroquirie Ichraq</option>
-                                        <option>Zara</option>
-                                    </select>
+                                <Select 
+                                        options={optionsbout}
+                                        value={selectedBoutique}
+                                        onChange={setSelectedBoutique}
+                                        labelledBy="Select"
+                                      />
                                 </div>
                             </div>
                         </div>
@@ -174,12 +248,7 @@ const AddProduit = () => {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={(e)=>{
-                        e.preventDefault();
-                        addproduit();
-                        setShowModal(false);
-                    }}
-                  >
+                    onClick={(e)=>{ajouterproduit(e)}}>
                     Ajouter
                   </button>
                 </div>

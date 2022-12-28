@@ -11,7 +11,10 @@ const boutique={
     estEnCongé:false,
     listintervalle:[],
     ouverture:"",
-    fermeture:""
+    fermeture:"",
+    listBoutique:[],
+    listBoutiquebyuser:[],
+    username:""
 }
 
 function reducer(state,action){
@@ -31,6 +34,18 @@ function reducer(state,action){
                 listintervalle:action.data
             }
          }
+        case "allboutique":{
+            return {
+                ...state,
+                listBoutique:action.data
+            }
+         }
+        case "allboutiquebyuser":{
+            return {
+                ...state,
+                listBoutiquebyuser:action.data
+            }
+         }
         default:return state
     }
 }
@@ -41,6 +56,8 @@ export const ContextBoutique=React.createContext()
 const ProviderBoutique=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,boutique)
     const[data ,setData]=useState([]);
+    const[datalisteboutique ,setDatalistboutique]=useState([]);
+    const[datalisteboutiquebyuser ,setDatalistboutiquebyuser]=useState([]);
     const[idhoraire ,setIdhoraire]=useState();
     const addboutique=async()=>{
        await axios.post(`http://localhost:8080/boutique/create`, {
@@ -102,15 +119,43 @@ const ProviderBoutique=({children})=>{
              data
          })
      };
+    const allboutique= async()=>{
+        await axios.get(`http://localhost:8080/boutique/list`).then((response)=>{
+        setDatalistboutique(response.data);
+        }).catch((error)=>{
+         console.log( "l'erreur " ,error.message);
+        });
+        
+         dispatch({
+             type:"allboutique",
+             data
+         })
+     };
+    const allboutiquebyuser= async(e)=>{
+        await axios.get(`http://localhost:8080/boutique/searchboutiques?username=${e}`).then((response)=>{
+            setDatalistboutiquebyuser(response.data);
+        }).catch((error)=>{
+         console.log( "l'erreur " ,error.message);
+        });
+        
+         dispatch({
+             type:"allboutiquebyuser",
+             data
+         })
+     };
     const value=useMemo(()=>{
         return {
             state,
             data,
+            datalisteboutique,
+            datalisteboutiquebyuser,
             idhoraire,
             allintervalle,
             addhoraire,
             addboutique,
-            addintervalle
+            addintervalle,
+            allboutique,
+            allboutiquebyuser
         }
     },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle])
     

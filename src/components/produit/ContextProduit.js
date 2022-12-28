@@ -15,7 +15,29 @@ const produit={
 function reducer(state,action){
     switch(action.type){
         case "addproduit":{
-           return axios.post(`http://localhost:8080/produit`, {
+            return {...state}
+        }
+         case "allproduit":{
+            return {
+                ...state,
+                listproduit:action.data
+            }
+         }
+        default:{
+
+        }
+    }
+}
+//creation du context 
+export const ContextProduit=React.createContext()
+
+//cretation du provider
+const ProviderProduit=({children})=>{
+    const[state ,dispatch]=useReducer(reducer ,produit)
+    const[produitlist ,setProduitlist]=useState([]);
+
+    const addproduit=async()=>{
+        axios.post(`http://localhost:8080/produit`, {
                 nom: state.nom,
                 description: state.description,
                 categorieList: state.categorieList,
@@ -29,40 +51,27 @@ function reducer(state,action){
               }, (error) => {
                 console.log( "l'erreur " ,error.message);
               });
-        }
-        case "allproduit":{
-            return axios.get(`http://localhost:8080/produit/list`)
-               .then((response) => {
-                state.listproduit=response.data
-               }, (error) => {
-                 console.log( "l'erreur " ,error.message);
-               });
-         }
-        default:{
-
-        }
-    }
-}
-//creation du context 
-export const ContextProduit=React.createContext()
-
-//cretation du provider
-const ProviderProduit=({children})=>{
-    const[state ,dispatch]=useReducer(reducer ,produit)
-    const addproduit=()=>{
          dispatch({
             type:"addproduit"
         })
     }
-    const allproduit=()=>{
-        dispatch({
-            type:"allproduit",
-            payload:state.listproduit
-        })
-    }
+    
+    const allproduit= async()=>{
+        await axios.get(`http://localhost:8080/produit/list`)
+        .then((response) => {
+            setProduitlist(response.data)
+        }, (error) => {
+          console.log( "l'erreur " ,error.message);
+        });
+         dispatch({
+             type:"allproduit",
+             produitlist
+         })
+     };
     const value=useMemo(()=>{
         return {
             state,
+            produitlist,
             addproduit,
             allproduit
         }
