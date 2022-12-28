@@ -22,8 +22,8 @@ const HorizontalNavBar = () => {
                    
                    {data?(user.roles[0].authority)==="Vendeur-livreur"?(
                      <>
-                     <Link  href="/vendeur/addproduit"  onClick={()=> handleClick('/admin/addcategorie')} to="/vendeur/addproduit" className={`py-4 text-sm font-medium ${activeLink==="/admin/addcategorie"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Produit</Link>
-                     <Link  href="/vendeur/addproduit"  onClick={()=> handleClick('/vendeur/boutique')} to="/vendeur/boutique" className={`py-4 text-sm font-medium ${activeLink==="/vendeur/boutique"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Boutique</Link>
+                     <Link  href="/vendeur/addproduit"  onClick={()=> handleClick('/admin/addproduit')} to="/vendeur/addproduit" className={`py-4 text-sm font-medium ${activeLink==="/admin/addproduit"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Produit</Link>
+                     <Link  href="/vendeur/addboutique"  onClick={()=> handleClick('/vendeur/addboutique')} to="/vendeur/addboutique" className={`py-4 text-sm font-medium ${activeLink==="/vendeur/addboutique"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Boutique</Link>
                    </>
                    ):(
                     <>
