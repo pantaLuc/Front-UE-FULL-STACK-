@@ -5,6 +5,7 @@ import AddProduit from '../components/produit/AddProduit'
 import AddBoutique from '../components/boutique/AddBoutique'
 import ProviderProduit from '../components/produit/ContextProduit'
 import ProviderBoutique from '../components/boutique/ContextBoutique'
+import ProviderCategorie from '../components/categorie/ContextCategorie'
 import jwt_decode from "jwt-decode";
 
 const Vendeur = () => {
@@ -17,7 +18,7 @@ const Vendeur = () => {
        <HorizontalNavBar/>
        {data?(user.roles[0].authority)==="Vendeur-livreur" &&(
          <Routes>
-         <Route path="/addproduit" element={<AddProduit/>}></Route>
+         <Route path="/addproduit" element={<ProviderCategorie><ProviderBoutique><AddProduit/></ProviderBoutique></ProviderCategorie>}></Route>
          <Route path="/addboutique" element={<ProviderBoutique><AddBoutique/></ProviderBoutique>}></Route>
         </Routes>
         ):"Vous ne verrez rien"}
