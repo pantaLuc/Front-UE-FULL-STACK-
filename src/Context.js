@@ -2,7 +2,7 @@ import axios  from "axios";
 import React, { useMemo, useReducer, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useCallback } from "react";
-
+import Cookies from "js-cookie";
 
 const user={
     username:"",
@@ -49,6 +49,7 @@ const Provider=({children})=>{
         //  const date=new Date(jwt)
         localStorage.setItem('data',JSON.stringify(data))
         setToken(data)
+        Cookies.set('token' ,data)
         console.log(jwt.roles[0].authority)
           if(jwt.roles[0].authority==="Admin"){
              console.log("c'est un admin")
