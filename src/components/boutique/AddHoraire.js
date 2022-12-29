@@ -27,7 +27,7 @@ let options = data.map(item => ({
 console.log(options)
 
   return (
-    <div className="bg-white py-4 sm:py-16 lg:py-5">
+    <div className="bg-white py-2 sm:py-3 lg:py-2">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div>
           <p className="text-base font-bold text-gray-900">
@@ -35,26 +35,26 @@ console.log(options)
           </p>
         </div>
 
-        <div className="mt-6 rounded-2xl ring-1 ring-gray-300">
+        <div className="mt-1 rounded-2xl ring-1 ring-gray-300">
           <table className="min-w-full lg:divide-y lg:divide-gray-200">
             <thead className="hidden lg:table-header-group">
               <tr>
                 <td
                   width="50%"
-                  className="whitespace-normal px-6 py-4 text-sm font-medium text-gray-400"
+                  className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400"
                 >
                   Jours de semaines
                 </td>
 
-                <td className="whitespace-normal px-6 py-4 text-sm font-medium text-gray-400">
+                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
                   estCongé
                 </td>
 
-                <td className="whitespace-normal px-6 py-4 text-sm font-medium text-gray-400">
+                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
                   Selection plage
                 </td>
 
-                <td className="whitespace-normal px-6 py-4 text-sm font-medium text-gray-400">
+                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
                   Ajouter plage horaire
                 </td>
               </tr>
