@@ -159,7 +159,7 @@ const ProviderBoutique=({children})=>{
             allboutique,
             allboutiquebyuser
         }
-    },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle])
+    },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle ,datalisteboutique,datalisteboutiquebyuser])
     
     return <ContextBoutique.Provider value={value}>{children}</ContextBoutique.Provider>
 }

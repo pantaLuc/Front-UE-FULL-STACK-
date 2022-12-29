@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext ,useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import AddHoraire from "./AddHoraire";
 import { ContextBoutique } from "./ContextBoutique";
@@ -6,8 +6,30 @@ import { ContextBoutique } from "./ContextBoutique";
 const AddBoutique = () => {
   const [listesdeshoraires, setListesdeshoraires] = useState([]);
   const [alerte, setAlerte] = useState(false);
+  const { state,  datalisteboutiquebyuser, addboutique ,allboutiquebyuser , perPage } = useContext(ContextBoutique);
+  const [firstRender ,setFirstRender]=useState(false)
+  const [offset, setOffset] = useState(0);
 
-  const { state, data, addboutique } = useContext(ContextBoutique);
+  useEffect(() => {
+    if (!firstRender) {
+       
+        //allboutiquebyuser();
+        setFirstRender(true) 
+    }
+}, [firstRender ,offset])
+const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage)
+
+console.log("la liste", datalisteboutiquebyuser)
+const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    setOffset(selectedPage + 1)
+};
+const [searchField, setsearchField] = useState('');
+const filtreedBoutique=slice.filter(category=>(
+  category.nom.toLowerCase().includes(searchField.toLowerCase())
+));
+
+  //la liste des horaires 
   const listHoraire = (e) => {
     setListesdeshoraires(e);
   };
@@ -81,7 +103,9 @@ const AddBoutique = () => {
                           <th class="py-3 px-6 text-center">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="text-gray-600 text-sm font-light"></tbody>
+                      <tbody className="text-gray-600 text-sm font-light">
+
+                      </tbody>
                     </table>
                     <ReactPaginate />
                   </div>
