@@ -4,6 +4,7 @@ import axios  from "axios";
 const boutique={
     nom: "",
     dateCreationBoutique: "",
+    image:"",
     horaireList: {},
     utilisateur: "",
     joursemaine:"",
@@ -62,6 +63,7 @@ const ProviderBoutique=({children})=>{
     const addboutique=async()=>{
        await axios.post(`http://localhost:8080/boutique/create`, {
                 nom: state.nom,
+                image:state.image,
                 dateCreationBoutique: state.dateCreationBoutique,
                 horaireList: state.horaireList,
                 utilisateur: state.utilisateur
@@ -157,7 +159,7 @@ const ProviderBoutique=({children})=>{
             allboutique,
             allboutiquebyuser
         }
-    },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle])
+    },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle ,datalisteboutique,datalisteboutiquebyuser])
     
     return <ContextBoutique.Provider value={value}>{children}</ContextBoutique.Provider>
 }
