@@ -12,6 +12,7 @@ import Vendeur from "./pages/Vendeur";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import ProviderCategorie from './components/categorie/ContextCategorie'
+import ProviderBoutique from './components/boutique/ContextBoutique'
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
       <Route path="/signin" element={<Signin/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
       <Route path="/categorie" element={<ProviderCategorie><ListCategorie/></ProviderCategorie>}></Route>
-      <Route path="/boutique" element={<ListBoutique/>}></Route>
+      <Route path="/boutique" element={<ProviderBoutique><ListBoutique/></ProviderBoutique>}></Route>
       <Route path="/produit" element={<ListProduits/>}></Route>
       <Route path="/vendeur/*" element={<Vendeur/>}></Route>
 
