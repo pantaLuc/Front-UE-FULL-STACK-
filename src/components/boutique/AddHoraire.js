@@ -1,5 +1,4 @@
 import { React, useState ,useContext, useEffect} from "react";
-import { MultiSelect } from "react-multi-select-component";
 import {ContextBoutique} from "./ContextBoutique"
 import LigneListeBoutique from "./LigneListeBoutique"
 
@@ -16,7 +15,7 @@ const AddHoraire = (props) => {
     const unique = lisIdHoraire.filter((obj, index) => {
       return index === lisIdHoraire.findIndex(o => obj.id === o.id );
     });
-    (unique.length==7 && props.listHoraire(unique))
+    (unique.length===7 && props.listHoraire(unique))
     console.log(unique.length);
 
 }, [firstRender ,allintervalle,data]);
@@ -27,7 +26,7 @@ let options = data.map(item => ({
 console.log(options)
 
   return (
-    <div className="bg-white py-2 sm:py-3 lg:py-2">
+    <div className="bg-white py-4 sm:py-4 lg:py-2">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div>
           <p className="text-base font-bold text-gray-900">
@@ -36,25 +35,24 @@ console.log(options)
         </div>
 
         <div className="mt-1 rounded-2xl ring-1 ring-gray-300">
-          <table className="min-w-full lg:divide-y lg:divide-gray-200">
+          <table className="min-w-full lg:divide-y lg:divide-gray-200 mb-6 mt-3">
             <thead className="hidden lg:table-header-group">
               <tr>
                 <td
-                  width="50%"
-                  className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400"
+                  className="whitespace-normal px-4 py-2 text-sm font-medium text-gray-400"
                 >
                   Jours de semaines
                 </td>
 
-                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
-                  estCongé
+                <td className="whitespace-normal px-4 py-2 text-sm font-medium text-gray-400">
+                  est en Congé
                 </td>
 
-                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
+                <td className="whitespace-normal px-4 py-4 text-sm font-medium text-gray-400">
                   Selection plage
                 </td>
 
-                <td className="whitespace-normal px-6 py-2 text-sm font-medium text-gray-400">
+                <td className="whitespace-normal px-1 py-1 text-sm font-medium text-gray-400">
                   Ajouter plage horaire
                 </td>
               </tr>
@@ -79,7 +77,7 @@ console.log(options)
                 <LigneListeBoutique jour="SAMEDI" idhorairevalidate={
                    (e)=>lisIdHoraire.push({id:e}) 
                 }/>
-                <LigneListeBoutique jour="DIMANCHE" idhorairevalidate={
+                <LigneListeBoutique  jour="DIMANCHE" idhorairevalidate={
                    (e)=>lisIdHoraire.push({id:e}) 
                 }/>
             </tbody>

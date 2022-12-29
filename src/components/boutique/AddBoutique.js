@@ -12,7 +12,7 @@ const AddBoutique = () => {
     setListesdeshoraires(e);
   };
   const ajouterBoutique = (e) => {
-    if (listesdeshoraires.length != 7) {
+    if (listesdeshoraires.length !== 7) {
       alert("Vérifiez que vous avez validez toutes les horaires.");
       setAlerte(true);
     } else {
@@ -94,7 +94,7 @@ const AddBoutique = () => {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-5xl ">
+            <div className="relative w-auto my-4 mx-auto max-w-8xl ">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -103,7 +103,7 @@ const AddBoutique = () => {
 
                 </div>
                 {/*body*/}
-                <div className="relative p-3 flex-auto">
+                <div className="relative p-2 flex-auto">
                   <div className="py-2 sm:py-3 lg:py-3">
                     {alerte ? (
                       <div className="py-3 bg-transparent">
@@ -167,9 +167,9 @@ const AddBoutique = () => {
                     ) : null}
                     <div class="mx-auto max-w-md overflow-hidden rounded-xl bg-white shadow-md md:max-w-full">
                       <form>
-                        <div class="md:flex">
-                          <div class="m-2 md:shrink-0">
-                              <div className="mt-6 rounded-2xl ring-0 ">
+                        <div class="md:flex ">
+                          <div class="m-3 md:shrink-0">
+                              <div className="mt-3 rounded-2xl ring-0 ">
                                 <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                                   <div className="max-w-xl mx-auto">
                                     <div>
@@ -216,6 +216,9 @@ const AddBoutique = () => {
                                           id=""
                                           placeholder="example.com"
                                           className="flex-1 border block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
+                                          onChange={(e) => {
+                                            state.image = e.target.value;
+                                          }}
                                         />
                                       </div>
                                     </div>
@@ -251,7 +254,7 @@ const AddBoutique = () => {
                           
                            
                           </div>
-                          <div className="">
+                          <div className="max-w-full">
                             <AddHoraire listHoraire={listHoraire} />
                           </div>
                         </div>

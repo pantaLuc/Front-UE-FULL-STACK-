@@ -37,7 +37,7 @@ const LigneisteBoutique = (props) => {
     <>
     <tr className={validate?"line-through opacity-50":""}>
         
-        <td width="50%" className="whitespace-nowrap px-6 py-4 text-sm font-bold text-gray-900">
+        <td  className="whitespace-nowrap px-6 py-4 text-sm font-bold text-gray-900">
                         {props.jour}
                         <MultiSelect 
                         className="mt-1 lg:hidden"
@@ -49,10 +49,10 @@ const LigneisteBoutique = (props) => {
                         />
                       </td>
 
-                      <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-bold text-gray-900 lg:text-left">
+                      <td class="whitespace-nowrap px-3 py-2 text-right text-sm font-bold text-gray-900 lg:text-left">
                       <div>
                           <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                          onChange={(e) => ((e.target.value=="Oui"?(setDisable(true)&&setConge(true)):(setDisable(false)&&setConge(false))))}
+                          onChange={(e) => ((e.target.value==="Oui"?(setDisable(true)&&setConge(true)):(setDisable(false)&&setConge(false))))}
                           disabled={disableconge}>
                           <option value="Oui">Oui</option>
                           <option value="No">Non</option>
@@ -65,7 +65,7 @@ const LigneisteBoutique = (props) => {
                     </div>
                   </td>
 
-                      <td className="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell">
+                      <td className="hidden whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 lg:table-cell">
                         <MultiSelect
                           options={options}
                           value={selected}
@@ -75,8 +75,8 @@ const LigneisteBoutique = (props) => {
                         />
                       </td>
 
-                  <td class="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell">
-                    <div class="inline-flex items-center space-x-1">
+                  <td class="hidden whitespace-nowrap px-8 py-3 text-sm font-medium text-gray-900 lg:table-cell">
+                    <div class=" items-center space-x-1">
                     <button class="inline-flex items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200"
                    disabled={validate} onClick={(e)=>{
                     e.preventDefault();setShowaddintervalle(true)}}>
@@ -84,9 +84,9 @@ const LigneisteBoutique = (props) => {
                       </button>
                     </div>
                   </td>
-                  <td class="hidden whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell">
+                  <td class="hidden whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 lg:table-cell">
                     <div class="inline-flex items-center space-x-1">
-                    <button class="inline-flex items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200"
+                    <button class="items-center justify-center w-10 h-10 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200"
                     onClick={(e)=>{validateLigne(e)}}>
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
