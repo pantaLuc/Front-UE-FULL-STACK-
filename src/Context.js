@@ -51,6 +51,7 @@ const Provider=({children})=>{
         setToken(data)
         Cookies.set('token' ,data)
         console.log(jwt.roles[0].authority)
+        console.log("mes cookies" ,Cookies.get('token'))
           if(jwt.roles[0].authority==="Admin"){
              console.log("c'est un admin")
           }else{
