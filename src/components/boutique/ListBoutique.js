@@ -1,8 +1,20 @@
-import React from 'react';
+import React,{useContext, useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
+import {ContextBoutique} from "./ContextBoutique"
 
 const ListBoutique = () => {
+  const {allboutique,datalisteboutique}=useContext(ContextBoutique);
+  const [firstRender ,setFirstRender]=useState(false);
+
+  useEffect(() => {
+      
+    if (!firstRender) {
+        allboutique();
+        setFirstRender(true) 
+    }
+    console.log(datalisteboutique)
+  }, [firstRender ,allboutique])
     const boutiques=[
         {
             nom:"Maroquinerie Ichraq",
@@ -52,15 +64,15 @@ const ListBoutique = () => {
     
             <div className="grid grid-cols-1 gap-5 mt-8 sm:mt-12 sm:grid-cols-2 xl:grid-cols-3 sm:gap-8 xl:gap-12">
                {
-                boutiques.map(({nom ,proprietaire ,telephone ,image } ,id)=>{
+                datalisteboutique.map((boutique)=>{
 
                     return(
                         
-                          <div key={id} className="relative overflow-hidden bg-white shadow-xl rounded-xl  shadow-gray-400/10  transition-all duration-200">
+                          <div className="relative overflow-hidden bg-white shadow-xl rounded-xl  shadow-gray-400/10  transition-all duration-200">
                             <div className="p-1">
                               <div className="sm:flex">
                                 <div className="shrink-1">
-                                <img className="object-cover h-auto mx-auto rounded-xl w-52 sm:mx-0" src={image} alt=""></img>
+                                <img className="object-cover h-auto mx-auto rounded-xl w-52 sm:mx-0" src={boutique.image?boutique.image:"https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg"} alt=""></img>
                                   <div className="mt-4">
                                     <Link
                                       className="inline-flex items-center justify-center w-full px-4 py-2 text-xs font-bold tracking-widest text-gray-500  transition-all duration-200 bg-transparent border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 hover:bg-gray-100 hover:text-gray-900"
@@ -72,7 +84,7 @@ const ListBoutique = () => {
                   
                                 <div className="mt-6 sm:ml-8 sm:mt-0">
                                   <p className="text-xs font-bold text-gray-900">
-                                    {nom}
+                                    {boutique.nom}
                                   </p>
                   
                                   <ul className="mt-5 space-y-5">
@@ -82,11 +94,10 @@ const ListBoutique = () => {
                                       </p>
                                       <div className="flex items-end justify-center">
                                         <p className="text-xs  text-gray-900">
-                                          11 jan 2021
+                                          {boutique.dateCreationBoutique}
                                         </p>
                                       </div>
                                     </li>
-                  
                                     <li className="flex items-center justify-between">
                                       <p className="text-xs  tracking-wide text-gray-500 ">
                                         Ouvert :
