@@ -65,14 +65,15 @@ const ListCategorie = () => {
             </div>
             <ReactPaginate
                     previousLabel={"<<"}
-                    previousClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    previousClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
                     nextLabel={">>"}
-                    nextLinkClassName="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    nextLinkClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
                     pageCount={pageCount}
                     onPageChange={handlePageClick}
                     containerClassName="flex cursor-pointer list-none justify-center space-x-6 p-5"
-                    disabledClassName='border-2 border-solid  px-2 py-2'
-                    activeClassName="border-2 border-solid  px-2 py-2"/>
+                    disabledClassName="border-1 border-solid  px-1 py-1"
+                    activeClassName="border-1 border-solid  px-1 py-1"
+                  />
         </div>
     </section>
     );
