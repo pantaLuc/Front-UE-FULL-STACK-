@@ -1,5 +1,6 @@
 import React, { useMemo, useReducer, useState } from "react"
 import axios  from "axios";
+import Cookies from "js-cookie";
 
 const boutique={
     nom: "",
@@ -67,7 +68,14 @@ const ProviderBoutique=({children})=>{
                 dateCreationBoutique: state.dateCreationBoutique,
                 horaireList: state.horaireList,
                 utilisateur: state.utilisateur
-               })
+               },
+                {
+                    headers:{
+                        'Authorization':`${"Bearer "+Cookies.get("token")}`
+                    }
+                
+                 }
+               )
                .then((response) => {
                 window.location.reload();
                  console.log(response.data);
