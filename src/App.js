@@ -18,12 +18,13 @@ import { useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { Context } from "./Context";
 
+
 function App() {
   const navigate = useNavigate();
   const { getCookie, isValidToken, tokeValid } = useContext(Context);
   const [firstRender, setFirstRender] = useState(false);
-  const data = JSON.parse(localStorage.getItem("data"));
-  const user = data ? jwt_decode(data) : "";
+  const data = getCookie();
+  const user = data?jwt_decode(data) : "";
 
   useEffect(() => {
     if (!firstRender) {

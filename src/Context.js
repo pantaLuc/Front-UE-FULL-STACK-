@@ -36,6 +36,11 @@ function reducer(state,action){
             ...state
           }
         }
+        case "searchUser":{
+          return{
+            ...state
+          }
+        }
         default:return state
     };
 };
@@ -48,6 +53,7 @@ const Provider=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,user);
     const[token , setToken]=useState()
     const[tokeValid ,setTokenValid]=useState(false)
+    const[userId ,setUserId]=useState()
     //signin
     const signin=useCallback(async()=>{
       !! state.username && state.password &&
@@ -107,7 +113,15 @@ const Provider=({children})=>{
     }).catch((error)=>{
      console.log( "l'erreur " ,error.message);
     });
-    
+    }
+
+    const searchByUsername=async(e)=>{
+        await axios.get(`http://localhost:8080/user/searchNom?username=${e}`).then((response)=>{
+          console.log("Le user",response.data)
+           setUserId(response.data)
+      }).catch((error)=>{
+      console.log( "l'erreur " ,error.message);
+      });
     }
     const regexUsername = new RegExp("^.{4,4}$|^.{8,8}$");
     const regexPass = new RegExp("^(?=^[a-zA-Z!@#$%^&*]*[A-Z][a-zA-Z!@#$%^&*]*$)(?=^[a-zA-Z0-9]*[!@#$%^&*][a-zA-Z0-9]*$).{8}$");
@@ -121,9 +135,11 @@ const Provider=({children})=>{
             token,
             tokeValid,
             getCookie,
-            isValidToken
+            isValidToken,
+            userId,
+            searchByUsername
         }
-    } ,[token ,signin ,tokeValid])
+    } ,[token ,signin ,tokeValid ,searchByUsername])
     
     
     return <Context.Provider value={value}>{children}</Context.Provider>
