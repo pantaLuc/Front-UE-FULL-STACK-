@@ -12,10 +12,11 @@ const LigneisteBoutique = (props) => {
     const [conge, setConge] = useState(false);
     const [disable, setDisable] = useState(true);
     const {state ,allintervalle,addhoraire,data,idhoraire,addintervalle}=useContext(ContextBoutique);
-    let options = data.map(item => ({
+    let options =data.map(item => ({
         label: item.ouverture +"-"+ item.fermeture,
         value: item.id
       }));
+      console.log("dsfff", )
       useEffect(() => {
         {idhoraire&&props.idhorairevalidate(idhoraire)}
     

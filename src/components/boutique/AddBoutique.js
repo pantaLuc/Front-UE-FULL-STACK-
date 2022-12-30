@@ -1,4 +1,4 @@
-import React, { useState, useContext ,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Context } from "../../Context";
 import AddHoraire from "./AddHoraire";
@@ -8,35 +8,42 @@ import jwt_decode from "jwt-decode";
 const AddBoutique = () => {
   const [listesdeshoraires, setListesdeshoraires] = useState([]);
   const [alerte, setAlerte] = useState(false);
-  const { state,  datalisteboutiquebyuser, addboutique ,allboutiquebyuser , perPage } = useContext(ContextBoutique);
-  const [firstRender ,setFirstRender]=useState(false)
+  const {
+    state,
+    datalisteboutiquebyuser,
+    addboutique,
+    allboutiquebyuser,
+    perPage,
+    deleteBoutique,
+  } = useContext(ContextBoutique);
+  const [firstRender, setFirstRender] = useState(false);
   const [offset, setOffset] = useState(0);
-  const {getCookie ,searchByUsername ,userId}=useContext(Context)
+  const { getCookie, searchByUsername, userId } = useContext(Context);
   const data = getCookie();
-  const user = data?jwt_decode(data) : "";
-
+  const user = data ? jwt_decode(data) : "";
+  const [showModalupdate, setShowModalupdate] = React.useState(false);
   useEffect(() => {
     if (!firstRender) {
-        searchByUsername(user.sub)
-        allboutiquebyuser(user.sub);
-        setFirstRender(true) 
+      searchByUsername(user.sub);
+      allboutiquebyuser(user.sub);
+      setFirstRender(true);
     }
-}, [firstRender ,offset,allboutiquebyuser,user ,searchByUsername])
+  }, [firstRender, offset, allboutiquebyuser, user, searchByUsername]);
 
-const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage)
+  const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage);
 
-console.log("la liste", datalisteboutiquebyuser)
+  console.log("la liste", slice);
 
-const handlePageClick = (e) => {
+  const handlePageClick = (e) => {
     const selectedPage = e.selected;
-    setOffset(selectedPage + 1)
-};
-const [searchField, setsearchField] = useState('');
-const filtreedBoutique=slice.filter(category=>(
-  category.nom.toLowerCase().includes(searchField.toLowerCase())
-));
-
-  //la liste des horaires 
+    setOffset(selectedPage + 1);
+  };
+  const [searchField, setsearchField] = useState("");
+  const filtreedBoutique = slice.filter((boutique) =>
+    boutique.nom.toLowerCase().includes(searchField.toLowerCase())
+  );
+  console.log("filter", filtreedBoutique);
+  //la liste des horaires
   const listHoraire = (e) => {
     setListesdeshoraires(e);
   };
@@ -46,7 +53,7 @@ const filtreedBoutique=slice.filter(category=>(
       setAlerte(true);
     } else {
       state.horaireList = listesdeshoraires;
-      state.utilisateur = {id:userId.id};
+      state.utilisateur = { id: userId.id };
       console.log(state.dateCreationBoutique);
       console.log(new Date(state.dateCreationBoutique));
       addboutique();
@@ -94,6 +101,7 @@ const filtreedBoutique=slice.filter(category=>(
                     id=""
                     placeholder="Chercher"
                     className="hidden m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+                    onChange={(e)=>setsearchField(e.target.value)}
                   />
                 </div>
               </div>
@@ -111,7 +119,87 @@ const filtreedBoutique=slice.filter(category=>(
                         </tr>
                       </thead>
                       <tbody className="text-gray-600 text-sm font-light">
-
+                        {filtreedBoutique?.map((boutiq) => {
+                          return (
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                              <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <div class="flex items-center">
+                                  <div class="mr-2">
+                                    <img
+                                      src={
+                                        boutiq.image
+                                          ? boutiq.image
+                                          :"https://img.freepik.com/vecteurs-libre/achetez-signe-que-nous-sommes-ouverts_52683-38687.jpg"
+                                      }
+                                      className="object-contain"
+                                      width="50"
+                                      height="50"
+                                      alt=""
+                                    />
+                                  </div>
+                                  <span class="font-medium">{boutiq.nom}</span>
+                                </div>
+                              </td>
+                              <td class="py-3 px-6 text-center">
+                                <span class="">
+                                  {boutiq.dateCreationBoutique}
+                                </span>
+                              </td>
+                              <td class="py-3 px-6 text-center">
+                                <div class="flex item-center justify-center">
+                                  <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                    <button
+                                      type="button"
+                                      class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                      onClick={(e) => {
+                                        state.boutiUpdate=boutiq;
+                                        setShowModalupdate(true)
+                                      }}
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                    <button
+                                      type="button"
+                                      class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                      onClick={(e) => {      
+                                        e.preventDefault();
+                                        deleteBoutique(boutiq.id)
+                                      }}
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                     <ReactPaginate />
@@ -122,7 +210,7 @@ const filtreedBoutique=slice.filter(category=>(
           </div>
         </div>
       </div>
-      {showModal ? (
+      {showModal ||showModalupdate ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-4 mx-auto max-w-8xl ">
@@ -131,7 +219,6 @@ const filtreedBoutique=slice.filter(category=>(
                 {/*header*/}
                 <div className="flex items-start justify-between p-2 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-2xl font-semibold">Ajout Boutique</h3>
-
                 </div>
                 {/*body*/}
                 <div className="relative p-2 flex-auto">
@@ -200,93 +287,94 @@ const filtreedBoutique=slice.filter(category=>(
                       <form>
                         <div class="md:flex ">
                           <div class="m-3 md:shrink-0">
-                              <div className="mt-3 rounded-2xl ring-0 ">
-                                <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                                  <div className="max-w-xl mx-auto">
-                                    <div>
-                                      <label
-                                        htmlFor=""
-                                        className="block text-sm font-bold text-gray-900"
-                                      >
-                                        {" "}
-                                        Nom de la Boutique
-                                      </label>
-                                      <div className="mt-2">
-                                        <input
-                                          type="text"
-                                          name=""
-                                          id=""
-                                          placeholder="Nom de la boutique"
-                                          className="block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
-                                          onChange={(e) => {
-                                            state.nom = e.target.value;
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                                  <div className="max-w-xl mx-auto">
-                                    <div>
-                                      <label
-                                        htmlFor=""
-                                        className="block text-sm font-bold text-gray-900"
-                                      >
-                                        {" "}
-                                        Image Boutique{" "}
-                                      </label>
-                                      <div className="relative flex mt-2">
-                                        <div className="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">
-                                          https://
-                                        </div>
-
-                                        <input
-                                          type="url"
-                                          name=""
-                                          id=""
-                                          placeholder="example.com"
-                                          className="flex-1 border block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
-                                          onChange={(e) => {
-                                            state.image = e.target.value;
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                                  <div className="max-w-xl mx-auto">
-                                    <div>
-                                      <label
-                                        htmlFor=""
-                                        className="block text-sm font-bold text-gray-900"
-                                      >
-                                        Date Création{" "}
-                                      </label>
-                                      <div className="relative flex mt-2">
-                                        <input
-                                          type="datetime-local"
-                                          name=""
-                                          id=""
-                                          placeholder=""
-                                          className="datepicker block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
-                                          onChange={(e) => {
-                                            state.dateCreationBoutique =
-                                              e.target.value;
-                                          }}
-                                        />
-                                      </div>
+                            <div className="mt-3 rounded-2xl ring-0 ">
+                              <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                                <div className="max-w-xl mx-auto">
+                                  <div>
+                                    <label
+                                      htmlFor=""
+                                      className="block text-sm font-bold text-gray-900"
+                                    >
+                                      {" "}
+                                      Nom de la Boutique
+                                    </label>
+                                    <div className="mt-2">
+                                      <input
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.nom:null}
+                                        placeholder="Nom de la boutique"
+                                        className="block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
+                                        onChange={(e) => {
+                                          state.nom = e.target.value;
+                                        }}
+                                      />
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                          
-                           
+                              <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                                <div className="max-w-xl mx-auto">
+                                  <div>
+                                    <label
+                                      htmlFor=""
+                                      className="block text-sm font-bold text-gray-900"
+                                    >
+                                      {" "}
+                                      Image Boutique{" "}
+                                    </label>
+                                    <div className="relative flex mt-2">
+                                      <div className="inline-flex items-center px-3 text-gray-900 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 sm:text-sm">
+                                        https://
+                                      </div>
+
+                                      <input
+                                        type="url"
+                                        name=""
+                                        id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.image:null}
+                                        placeholder="example.com"
+                                        className="flex-1 border block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
+                                        onChange={(e) => {
+                                          state.image = e.target.value;
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                                <div className="max-w-xl mx-auto">
+                                  <div>
+                                    <label
+                                      htmlFor=""
+                                      className="block text-sm font-bold text-gray-900"
+                                    >
+                                      Date Création{" "}
+                                    </label>
+                                    <div className="relative flex mt-2">
+                                      <input
+                                        type="datetime-local"
+                                        name=""
+                                        id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.dateCreationBoutique:null}
+                                        placeholder=""
+                                        className="datepicker block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
+                                        onChange={(e) => {
+                                          state.dateCreationBoutique =
+                                            e.target.value;
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div className="max-w-full">
-                            <AddHoraire listHoraire={listHoraire} />
+                            <AddHoraire listHoraire={showModalupdate?state.boutiUpdate.horaireList:listHoraire} />
                           </div>
                         </div>
                       </form>
@@ -298,7 +386,7 @@ const filtreedBoutique=slice.filter(category=>(
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="reset"
-                    onClick={() => setShowModal(false)}
+                    onClick={() =>[ setShowModal(false), setShowModalupdate(false)]}
                   >
                     Fermer
                   </button>
