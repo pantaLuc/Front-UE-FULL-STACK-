@@ -21,7 +21,7 @@ const AddBoutique = () => {
   const { getCookie, searchByUsername, userId } = useContext(Context);
   const data = getCookie();
   const user = data ? jwt_decode(data) : "";
-
+  const [showModalupdate, setShowModalupdate] = React.useState(false);
   useEffect(() => {
     if (!firstRender) {
       searchByUsername(user.sub);
@@ -152,8 +152,8 @@ const AddBoutique = () => {
                                       type="button"
                                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                       onClick={(e) => {
-                                        //state.categorieupdate=categorie;
-                                        //setShowModalupdate(true)
+                                        state.boutiUpdate=boutiq;
+                                        setShowModalupdate(true)
                                       }}
                                     >
                                       <svg
@@ -175,8 +175,7 @@ const AddBoutique = () => {
                                     <button
                                       type="button"
                                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                                      onClick={(e) => {
-                                        
+                                      onClick={(e) => {      
                                         e.preventDefault();
                                         deleteBoutique(boutiq.id)
                                       }}
@@ -211,7 +210,7 @@ const AddBoutique = () => {
           </div>
         </div>
       </div>
-      {showModal ? (
+      {showModal ||showModalupdate ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-4 mx-auto max-w-8xl ">
@@ -304,6 +303,7 @@ const AddBoutique = () => {
                                         type="text"
                                         name=""
                                         id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.nom:null}
                                         placeholder="Nom de la boutique"
                                         className="block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                                         onChange={(e) => {
@@ -333,6 +333,7 @@ const AddBoutique = () => {
                                         type="url"
                                         name=""
                                         id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.image:null}
                                         placeholder="example.com"
                                         className="flex-1 border block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                                         onChange={(e) => {
@@ -358,6 +359,7 @@ const AddBoutique = () => {
                                         type="datetime-local"
                                         name=""
                                         id=""
+                                        defaultValue={showModalupdate?state.boutiUpdate.dateCreationBoutique:null}
                                         placeholder=""
                                         className="datepicker block w-full px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                                         onChange={(e) => {
@@ -372,7 +374,7 @@ const AddBoutique = () => {
                             </div>
                           </div>
                           <div className="max-w-full">
-                            <AddHoraire listHoraire={listHoraire} />
+                            <AddHoraire listHoraire={showModalupdate?state.boutiUpdate.horaireList:listHoraire} />
                           </div>
                         </div>
                       </form>
@@ -384,7 +386,7 @@ const AddBoutique = () => {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="reset"
-                    onClick={() => setShowModal(false)}
+                    onClick={() =>[ setShowModal(false), setShowModalupdate(false)]}
                   >
                     Fermer
                   </button>
