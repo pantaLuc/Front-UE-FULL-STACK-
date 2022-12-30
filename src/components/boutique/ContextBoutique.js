@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useState } from "react"
+import React, { useEffect, useMemo, useReducer, useState } from "react"
 import axios  from "axios";
 import Cookies from "js-cookie";
 
@@ -7,7 +7,7 @@ const boutique={
     dateCreationBoutique: "",
     image:"",
     horaireList: {},
-    utilisateur: "",
+    utilisateur: {},
     joursemaine:"",
     intervalleHeure:[],
     estEnCongé:false,
@@ -61,6 +61,7 @@ const ProviderBoutique=({children})=>{
     const[datalisteboutique ,setDatalistboutique]=useState([]);
     const[datalisteboutiquebyuser ,setDatalistboutiquebyuser]=useState([]);
     const[idhoraire ,setIdhoraire]=useState();
+    
     const addboutique=async()=>{
        await axios.post(`http://localhost:8080/boutique/create`, {
                 nom: state.nom,

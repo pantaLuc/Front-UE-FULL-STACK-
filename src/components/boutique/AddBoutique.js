@@ -1,7 +1,9 @@
 import React, { useState, useContext ,useEffect } from "react";
 import ReactPaginate from "react-paginate";
+import { Context } from "../../Context";
 import AddHoraire from "./AddHoraire";
 import { ContextBoutique } from "./ContextBoutique";
+import jwt_decode from "jwt-decode";
 
 const AddBoutique = () => {
   const [listesdeshoraires, setListesdeshoraires] = useState([]);
@@ -9,18 +11,22 @@ const AddBoutique = () => {
   const { state,  datalisteboutiquebyuser, addboutique ,allboutiquebyuser , perPage } = useContext(ContextBoutique);
   const [firstRender ,setFirstRender]=useState(false)
   const [offset, setOffset] = useState(0);
+  const {getCookie ,searchByUsername ,userId}=useContext(Context)
+  const data = getCookie();
+  const user = data?jwt_decode(data) : "";
 
   useEffect(() => {
     if (!firstRender) {
-       
-        allboutiquebyuser();
+        searchByUsername(user.sub)
+        allboutiquebyuser(user.sub);
         setFirstRender(true) 
     }
-}, [firstRender ,offset])
+}, [firstRender ,offset,allboutiquebyuser,user ,searchByUsername])
 
 const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage)
 
 console.log("la liste", datalisteboutiquebyuser)
+
 const handlePageClick = (e) => {
     const selectedPage = e.selected;
     setOffset(selectedPage + 1)
@@ -40,7 +46,7 @@ const filtreedBoutique=slice.filter(category=>(
       setAlerte(true);
     } else {
       state.horaireList = listesdeshoraires;
-      state.utilisateur = null;
+      state.utilisateur = {id:userId.id};
       console.log(state.dateCreationBoutique);
       console.log(new Date(state.dateCreationBoutique));
       addboutique();
