@@ -14,7 +14,7 @@ const HorizontalNavBar = () => {
     console.log("data",user.roles)
     return (
         
-        <div className="px-4 mx-auto mt-5 sm:px-6 md:px-8">
+        <div className="px-4 mx-auto mt-2 sm:px-6 md:px-8">
           
         <div className="px-4 mx-auto max-w-5xl sm:px-6 lg:px-8">
             <div className="border-b border-gray-200">
@@ -31,8 +31,7 @@ const HorizontalNavBar = () => {
                     <Link  href="/admin/alluser"  onClick={()=> handleClick('/admin/alluser')} to="/admin/alluser" className={`py-4 text-sm font-medium ${activeLink==="/admin/alluser"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  > All user</Link>
                     </>
                    ):"Vous ne verrez rien"}
-                    
-                    
+                     
                 </nav>
             </div>
         </div>

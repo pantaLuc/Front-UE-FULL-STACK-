@@ -1,8 +1,9 @@
 import axios  from "axios";
-import React, { useMemo, useReducer, useState } from "react";
+import React, { useMemo, useReducer, useState  } from "react";
 import jwt_decode from "jwt-decode";
 import { useCallback } from "react";
 import Cookies from "js-cookie";
+
 
 const user={
     username:"",
@@ -25,6 +26,16 @@ function reducer(state,action){
             ...state
            }
         }
+        case "isValidToken":{
+          return{
+            ...state ,
+          }
+        }
+        case"getCookie":{
+          return {
+            ...state
+          }
+        }
         default:return state
     };
 };
@@ -36,7 +47,8 @@ export const Context=React.createContext()
 const Provider=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,user);
     const[token , setToken]=useState()
-
+    const[tokeValid ,setTokenValid]=useState(false)
+    //signin
     const signin=useCallback(async()=>{
       !! state.username && state.password &&
       await axios.post(`http://localhost:8080/user/signin`, {
@@ -46,12 +58,10 @@ const Provider=({children})=>{
        .then((response) => {
          const data=response.data;
           const jwt=jwt_decode(data)
+          setToken(data)
         //  const date=new Date(jwt)
         localStorage.setItem('data',JSON.stringify(data))
-        setToken(data)
         Cookies.set('token' ,data)
-        console.log(jwt.roles[0].authority)
-        console.log("mes cookies" ,Cookies.get('token'))
           if(jwt.roles[0].authority==="Admin"){
              console.log("c'est un admin")
           }else{
@@ -64,8 +74,9 @@ const Provider=({children})=>{
        dispatch({
            type:"signin"
        })
-    },[token])
-   
+    },[token]);
+
+   //signup
     const signup=async ()=>{
         !!state.username&&!!state.password&&
         !!state.firstName&&
@@ -74,8 +85,7 @@ const Provider=({children})=>{
           username: state.username,
           password: state.password,
           firstName:state.firstName,
-          lastName:state.lastName
-          
+          lastName:state.lastName        
         })
         .then((response) => {
           console.log(response)
@@ -85,6 +95,20 @@ const Provider=({children})=>{
         
         dispatch({type:"signup"})
     };
+    //get COOKie 
+    const getCookie=()=>{
+      return Cookies.get("token")
+    };
+    // is valid
+    const isValidToken=async(e)=>{
+      await axios.get(`http://localhost:8080/user/validToken?token=${e}`).then((response)=>{
+        console.log("du provider",response.data)
+        setTokenValid(response.data)
+    }).catch((error)=>{
+     console.log( "l'erreur " ,error.message);
+    });
+    
+    }
     const regexUsername = new RegExp("^.{4,4}$|^.{8,8}$");
     const regexPass = new RegExp("^(?=^[a-zA-Z!@#$%^&*]*[A-Z][a-zA-Z!@#$%^&*]*$)(?=^[a-zA-Z0-9]*[!@#$%^&*][a-zA-Z0-9]*$).{8}$");
     const value=useMemo(()=>{
@@ -94,9 +118,12 @@ const Provider=({children})=>{
             signup,
             regexPass,
             regexUsername,
-            token
+            token,
+            tokeValid,
+            getCookie,
+            isValidToken
         }
-    } ,[token ,signin])
+    } ,[token ,signin ,tokeValid])
     
     
     return <Context.Provider value={value}>{children}</Context.Provider>
