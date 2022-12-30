@@ -12,7 +12,8 @@ const AddProduit = () => {
   const [selectedCat, setSelectedCat] = useState([]);
   const [selectedBoutique, setSelectedBoutique] = useState("");
   const [showModal, setShowModal] = React.useState(false);
-  const { state, addproduit, allproduit, produitlist ,deleteProduit } =
+  const [showModalupdate, setShowModalupdate] = React.useState(false);
+  const { state, addproduit, allproduit, produitlist ,deleteProduit , updateProduit } =
     useContext(ContextProduit);
   const { allcategorie, data } = useContext(ContextCategorie);
   const {
@@ -43,7 +44,7 @@ const AddProduit = () => {
   const ajouterproduit = async (e) => {
     e.preventDefault();
     state.boutique = { id: selectedBoutique.value };
-    state.categorieList = selectedCat.map((categorie) => ({
+    state.categorieList= selectedCat.map((categorie) => ({
       id: categorie.value,
     }));
     await addproduit();
@@ -143,8 +144,8 @@ const AddProduit = () => {
                                       type="button"
                                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                       onClick={(e) => {
-                                       // state.boutiUpdate=boutiq;
-                                       // setShowModalupdate(true)
+                                       state.produitUpdate=produit;
+                                       setShowModalupdate(true)
                                       }}
                                     >
                                       <svg
@@ -198,7 +199,7 @@ const AddProduit = () => {
           </div>
         </div>
       </div>
-      {showModal ? (
+      {showModal||showModalupdate? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -206,7 +207,7 @@ const AddProduit = () => {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Ajoutez un produit</h3>
+                  <h3 className="text-3xl font-semibold">{showModalupdate? "Modifiez un produit":"Ajoutez un produit"}</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -237,11 +238,13 @@ const AddProduit = () => {
                             <input
                               type="text"
                               name=""
+                              defaultValue={showModalupdate?state.produitUpdate.nom:null}
                               id=""
                               placeholder="Lait de coco"
                               className="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                               onChange={(e) => {
                                 state.nom = e.target.value;
+                                state.produitUpdate.nom=e.target.value;
                               }}
                             />
                           </div>
@@ -259,10 +262,12 @@ const AddProduit = () => {
                               type="text"
                               name=""
                               id=""
+                              defaultValue={showModalupdate?state.produitUpdate.image:null}
                               placeholder="https://images.unsplash.com/photo-146506078.jpg"
                               className="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                               onChange={(e) => {
                                 state.imageUrl = e.target.value;
+                                state.produitUpdate.imageUrl=e.target.value
                               }}
                             />
                           </div>
@@ -285,10 +290,12 @@ const AddProduit = () => {
                                 type="number"
                                 name=""
                                 id=""
+                                defaultValue={showModalupdate?state.produitUpdate.prix:null}
                                 placeholder="$ 0.00"
                                 class="flex-1 block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                                 onChange={(e) => {
                                   state.prix = e.target.value;
+                                  state.produitUpdate.prix=e.target.value;
                                 }}
                               />
                             </div>
@@ -310,10 +317,12 @@ const AddProduit = () => {
                                 type="number"
                                 name=""
                                 id=""
+                                defaultValue={showModalupdate?state.produitUpdate.quantité:null}
                                 placeholder="$ 0.00"
                                 class="flex-1 block w-full min-w-0 px-4 py-3 placeholder-gray-500 border-gray-300 border rounded-none rounded-r-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                                 onChange={(e) => {
                                   state.quantité = e.target.value;
+                                  state.produitUpdate.quantité=e.target.value;
                                 }}
                               />
                             </div>
@@ -334,9 +343,11 @@ const AddProduit = () => {
                               id=""
                               placeholder="Decrire un produit "
                               rows="3"
+                              defaultValue={showModalupdate?state.produitUpdate.description:null}
                               class="border block w-full px-4 py-3 placeholder-gray-500 border-gray-300 rounded-lg resize-y focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm caret-indigo-600"
                               onChange={(e) => {
                                 state.description = e.target.value;
+                                state.produitUpdate.description=e.target.value;
                               }}
                             ></textarea>
                           </div>
@@ -352,7 +363,7 @@ const AddProduit = () => {
                           <div className="mt-1">
                             <MultiSelect
                               options={optionscat}
-                              value={selectedCat}
+                              value={showModalupdate?state.produitUpdate.categorieList:selectedCat}
                               onChange={setSelectedCat}
                               labelledBy="Select"
                             />
@@ -370,7 +381,7 @@ const AddProduit = () => {
                           <div className="mt-1">
                             <Select
                               options={optionsbout}
-                              value={selectedBoutique}
+                              value={showModalupdate?state.produitUpdate.boutique:selectedBoutique}
                               onChange={setSelectedBoutique}
                               labelledBy="Select"
                             />
@@ -385,18 +396,22 @@ const AddProduit = () => {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="reset"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => [setShowModal(false) ,setShowModalupdate(false)]}
                   >
                     Fermer
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
+                   
                     onClick={(e) => {
-                      ajouterproduit(e);
+                        e.preventDefault()
+                        showModalupdate? updateProduit(): ajouterproduit(e) 
+                        setShowModalupdate(false)
+                        setShowModal(false)
                     }}
                   >
-                    Ajouter
+                  {showModalupdate?"Modifier": "Ajouter"}
                   </button>
                 </div>
               </div>
