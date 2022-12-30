@@ -14,6 +14,7 @@ const AddBoutique = () => {
     addboutique,
     allboutiquebyuser,
     perPage,
+    deleteBoutique,
   } = useContext(ContextBoutique);
   const [firstRender, setFirstRender] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -100,6 +101,7 @@ const AddBoutique = () => {
                     id=""
                     placeholder="Chercher"
                     className="hidden m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+                    onChange={(e)=>setsearchField(e.target.value)}
                   />
                 </div>
               </div>
@@ -126,12 +128,12 @@ const AddBoutique = () => {
                                     <img
                                       src={
                                         boutiq.image
-                                          ? boutiq.img
-                                          : "https://img.freepik.com/vecteurs-libre/achetez-signe-que-nous-sommes-ouverts_52683-38687.jpg"
+                                          ? boutiq.image
+                                          :"https://img.freepik.com/vecteurs-libre/achetez-signe-que-nous-sommes-ouverts_52683-38687.jpg"
                                       }
                                       className="object-contain"
-                                      width="24"
-                                      height="24"
+                                      width="50"
+                                      height="50"
                                       alt=""
                                     />
                                   </div>
@@ -174,9 +176,9 @@ const AddBoutique = () => {
                                       type="button"
                                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                       onClick={(e) => {
-                                        //state.iddelete=categorie.id
+                                        
                                         e.preventDefault();
-                                        // delcategorie();
+                                        deleteBoutique(boutiq.id)
                                       }}
                                     >
                                       <svg

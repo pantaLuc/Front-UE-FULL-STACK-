@@ -16,7 +16,7 @@ const boutique={
     fermeture:"",
     listBoutique:[],
     listBoutiquebyuser:[],
-    username:""
+    username:"",
 }
 
 function reducer(state,action){
@@ -46,6 +46,11 @@ function reducer(state,action){
             return {
                 ...state,
                 listBoutiquebyuser:action.data
+            }
+         }
+         case "deleteBoutique":{
+            return {
+                ...state
             }
          }
         default:return state
@@ -156,6 +161,19 @@ const ProviderBoutique=({children})=>{
              data
          })
      };
+
+     const deleteBoutique=async(e)=>{
+       await axios.delete(`${process.env.REACT_APP_API_URL}/boutique?id=${e}`)
+               .then((response) => {
+                 window.location.reload();
+                 console.log(response.data);
+               }, (error) => {
+                 console.log( "l'erreur " ,error.message);
+           });
+        dispatch({
+            type:"deleteBoutique"
+        })
+    };
     const value=useMemo(()=>{
         return {
             state,
@@ -169,6 +187,7 @@ const ProviderBoutique=({children})=>{
             addintervalle,
             allboutique,
             allboutiquebyuser,
+            deleteBoutique,
             perPage,
             pageCount
 
