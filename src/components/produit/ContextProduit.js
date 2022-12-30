@@ -23,6 +23,11 @@ function reducer(state,action){
                 listproduit:action.data
             }
          }
+         case "deleteProduit":{
+            return{
+                ...state
+            }
+         }
         default:{
 
         }
@@ -68,12 +73,29 @@ const ProviderProduit=({children})=>{
              produitlist
          })
      };
+     const deleteProduit=async(e)=>{
+        await axios
+      .delete(`${process.env.REACT_APP_API_URL}/produit?id=${e}`)
+      .then(
+        (response) => {
+          window.location.reload();
+          console.log(response.data);
+        },
+        (error) => {
+          console.log("l'erreur ", error.message);
+        }
+      );
+    dispatch({
+      type: "deleteProduit",
+    });
+     }
     const value=useMemo(()=>{
         return {
             state,
             produitlist,
             addproduit,
-            allproduit
+            allproduit,
+            deleteProduit
         }
     },[state.listproduit])
     
