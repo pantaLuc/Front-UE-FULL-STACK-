@@ -61,7 +61,8 @@ const ProviderBoutique=({children})=>{
     const[datalisteboutique ,setDatalistboutique]=useState([]);
     const[datalisteboutiquebyuser ,setDatalistboutiquebyuser]=useState([]);
     const[idhoraire ,setIdhoraire]=useState();
-    
+    const [pageCount, setPageCount] = useState(0);
+    const [perPage] = useState(9);
     const addboutique=async()=>{
        await axios.post(`http://localhost:8080/boutique/create`, {
                 nom: state.nom,
@@ -133,6 +134,7 @@ const ProviderBoutique=({children})=>{
     const allboutique= async()=>{
         await axios.get(`http://localhost:8080/boutique/list`).then((response)=>{
         setDatalistboutique(response.data);
+        setPageCount(Math.ceil(response.data.length/perPage))
         }).catch((error)=>{
          console.log( "l'erreur " ,error.message);
         });
@@ -166,7 +168,10 @@ const ProviderBoutique=({children})=>{
             addboutique,
             addintervalle,
             allboutique,
-            allboutiquebyuser
+            allboutiquebyuser,
+            perPage,
+            pageCount
+
         }
     },[state.listintervalle,addhoraire,allintervalle,addboutique,addintervalle ,datalisteboutique,datalisteboutiquebyuser])
     
