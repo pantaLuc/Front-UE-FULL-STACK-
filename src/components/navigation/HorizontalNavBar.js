@@ -20,12 +20,12 @@ const HorizontalNavBar = () => {
             <div className="border-b border-gray-200">
                 <nav className="flex -mb-px space-x-10">
                    
-                   {data?(user.roles[0].authority)==="Vendeur-livreur"?(
+                   {data?(user.roles[0].authority)==="Vendeur-livreur"&&(
                      <>
                      <Link  href="/vendeur/addproduit"  onClick={()=> handleClick('/admin/addproduit')} to="/vendeur/addproduit" className={`py-4 text-sm font-medium ${activeLink==="/admin/addproduit"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Produit</Link>
                      <Link  href="/vendeur/addboutique"  onClick={()=> handleClick('/vendeur/addboutique')} to="/vendeur/addboutique" className={`py-4 text-sm font-medium ${activeLink==="/vendeur/addboutique"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  >Boutique</Link>
                    </>
-                   ):(
+                   ):data?(user.roles[0].authority)==="Admin"&&(
                     <>
                     <Link  href="/admin/addcategorie"  onClick={()=> handleClick('/admin/addcategorie')} to="/admin/addcategorie" className={`py-4 text-sm font-medium ${activeLink==="/admin/addcategorie"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  > Categorie</Link>
                     <Link  href="/admin/alluser"  onClick={()=> handleClick('/admin/alluser')} to="/admin/alluser" className={`py-4 text-sm font-medium ${activeLink==="/admin/alluser"?' text-indigo-600  border-indigo-600':' text-gray-500  border-transparent hover:border-gray-300 ' } transition-all duration-200  border-b-2  whitespace-nowrap`}  > All user</Link>
