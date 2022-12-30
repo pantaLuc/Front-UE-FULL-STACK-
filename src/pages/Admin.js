@@ -8,8 +8,8 @@ const Admin = () => {
        <>
        <ProviderCategorie>
        <Routes>
-        <Route path='/addcategorie' element={<AddCategorie/>}></Route>
-        <Route path='/alluser'  element={<AllUsers/>}></Route>
+        <Route path="/addcategorie" element={<AddCategorie/>}></Route>
+        <Route path="/alluser" element={<AllUsers/>}></Route>
        </Routes>
        </ProviderCategorie>
        </>

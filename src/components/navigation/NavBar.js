@@ -24,7 +24,7 @@ const NavBar = () => {
       ]
       const { getCookie, isValidToken, tokeValid } = useContext(Context);
       const [firstRender, setFirstRender] = useState(false);
-      const data = JSON.parse(localStorage.getItem("data"));
+      const data = getCookie();
       const user = data ? jwt_decode(data) : "";
     
       useEffect(() => {
@@ -34,7 +34,6 @@ const NavBar = () => {
           setFirstRender(true)
         }
       }, [getCookie, isValidToken ,firstRender]);
-      console.log("c' est valide", tokeValid);
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
        

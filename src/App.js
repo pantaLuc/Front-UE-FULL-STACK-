@@ -46,13 +46,12 @@ function App() {
       <Route path="/categorie" element={<ProviderCategorie><ListCategorie/></ProviderCategorie>}></Route>
       <Route path="/boutique" element={<ProviderBoutique><ListBoutique/></ProviderBoutique>}></Route>
       <Route path="/produit" element={<ProviderProduit><ListProduits/></ProviderProduit>}></Route>
-      {
-        tokeValid?user.roles[0].authority === "Vendeur-livreur"&&
-        ( <Route path="/vendeur/*" element={<Vendeur/>}></Route>):tokeValid?user.roles[0].authority === "Admin"&&(
-          <Route path="/admin/*" element={<Admin/>}></Route>
-        ):<Route path="/signin" element={<Signin/>}></Route>
-      }
      
+     {
+      tokeValid?(user.roles[0].authority === "Vendeur-livreur"? ( <Route path="/vendeur/*" element={<Vendeur/>}></Route>):
+      user.roles[0].authority === "Admin"?( <Route path="/admin/*" element={<Admin/>}></Route>):null
+      ):null
+     }
      
      </Routes>
     <Footer/>
