@@ -13,10 +13,11 @@ const AddBoutique = () => {
   useEffect(() => {
     if (!firstRender) {
        
-        //allboutiquebyuser();
+        allboutiquebyuser();
         setFirstRender(true) 
     }
 }, [firstRender ,offset])
+
 const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage)
 
 console.log("la liste", datalisteboutiquebyuser)

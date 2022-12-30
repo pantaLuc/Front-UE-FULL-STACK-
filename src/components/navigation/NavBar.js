@@ -1,7 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Context } from '../../Context';
 import logo from'../../images/fullStack.png'
+import HorizontalNavBar from './HorizontalNavBar';
+import jwt_decode from "jwt-decode";
 const NavBar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const Links = [
@@ -19,7 +22,19 @@ const NavBar = () => {
             name:"Boutique"
           }
       ]
-      
+      const { getCookie, isValidToken, tokeValid } = useContext(Context);
+      const [firstRender, setFirstRender] = useState(false);
+      const data = JSON.parse(localStorage.getItem("data"));
+      const user = data ? jwt_decode(data) : "";
+    
+      useEffect(() => {
+        if (!firstRender) {
+          console.log("le token", getCookie());
+          isValidToken(getCookie());   
+          setFirstRender(true)
+        }
+      }, [getCookie, isValidToken ,firstRender]);
+      console.log("c' est valide", tokeValid);
     return (
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
        
@@ -48,6 +63,7 @@ const NavBar = () => {
              
              {
                 Links?.map(({ to ,name }, id)=>{
+                       
                    return( <Link key={id} to={to} className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                          {name}
                     </Link>)
@@ -71,13 +87,19 @@ const NavBar = () => {
                     <input type="search" name="" id="" class="block w-full rounded-lg border border-gray-300 py-2 pl-10 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm" placeholder="rechercher" />
                 </div>
             </div>
-
-                <Link to="/signup" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                {
+                    tokeValid? <p>Bienvenue {user.sub}</p> :(
+                        <>
+                        <Link to="/signup" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                     Sign up
                 </Link>
                 <Link to="/signin" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                     Sign in
                 </Link>
+                        </>
+                    )
+                }
+                
             </div>
         </nav>
 
@@ -104,7 +126,9 @@ const NavBar = () => {
             </div>   
              
         </nav>
-        
+       {
+        tokeValid?(<HorizontalNavBar/>):null
+       } 
     </div>
     );
 };
