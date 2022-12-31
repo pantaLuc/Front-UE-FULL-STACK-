@@ -80,7 +80,7 @@ const ProviderBoutique = ({ children }) => {
   const [datalisteboutiquebyuser, setDatalistboutiquebyuser] = useState([]);
   const [idhoraire, setIdhoraire] = useState();
   const [pageCount, setPageCount] = useState(0);
-  const [perPage] = useState(9);
+  const [perPage] = useState(6);
   const addboutique = async () => {
     await axios
       .post(
