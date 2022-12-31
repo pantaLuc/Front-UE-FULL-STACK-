@@ -24,7 +24,7 @@ const ListCategorie = () => {
       category.nom.toLowerCase().includes(searchField.toLowerCase())
   ));
     return (
-        <section className="py-12 bg-white sm:py-16 lg:py-20">
+        <section className="py-10 bg-white sm:py-14 lg:py-14">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">Selectionez une  Categorie pour debuter</h2>
@@ -34,7 +34,7 @@ const ListCategorie = () => {
                           onChange={(e)=>setsearchField(e.target.value)}
              />
             </div>
-            <div className="grid grid-cols-1 gap-5 mt-8 sm:mt-12 sm:grid-cols-2 xl:grid-cols-3 sm:gap-8 xl:gap-12">
+            <div className="grid grid-cols-1 gap-5 mt-8 sm:mt-8 sm:grid-cols-2 xl:grid-cols-3 sm:gap-8 xl:gap-12">
                
                 {
                     filtreedcategory?.map(categorie=>{

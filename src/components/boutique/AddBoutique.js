@@ -14,6 +14,7 @@ const AddBoutique = () => {
     addboutique,
     allboutiquebyuser,
     perPage,
+    pageCount,
     deleteBoutique,
   } = useContext(ContextBoutique);
   const [firstRender, setFirstRender] = useState(false);
@@ -202,7 +203,17 @@ const AddBoutique = () => {
                         })}
                       </tbody>
                     </table>
-                    <ReactPaginate />
+                    <ReactPaginate
+                    previousLabel={"<<"}
+                    previousClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    nextLabel={">>"}
+                    nextLinkClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    containerClassName="flex cursor-pointer list-none justify-center space-x-6 p-5"
+                    disabledClassName="border-1 border-solid  px-1 py-1"
+                    activeClassName="border-1 border-solid  px-1 py-1"
+                  />
                   </div>
                 </div>
               </div>

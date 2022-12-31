@@ -54,7 +54,7 @@ const ProviderCategorie=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,categorie);
     const[data ,setData]=useState([]);
     const [pageCount, setPageCount] = useState(0);
-    const [perPage] = useState(9);
+    const [perPage] = useState(6);
     const addcategorie=async()=>{
         !! state.nom && state.description && 
         await axios.post(`${process.env.REACT_APP_API_URL}/categorie`, {
