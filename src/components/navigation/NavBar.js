@@ -87,7 +87,11 @@ const NavBar = () => {
                 </div>
             </div>
                 {
-                    tokeValid? <p>Bienvenue {user.sub}</p> :(
+                    tokeValid?( 
+                    <div>
+                        <p>Bienvenue {user.sub}</p>
+                    </div>
+                    ) :(
                         <>
                         <Link to="/signup" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                     Sign up

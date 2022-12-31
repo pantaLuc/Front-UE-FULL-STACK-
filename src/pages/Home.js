@@ -11,7 +11,7 @@ const Home = () => {
           <div className="flex-1">
             <span className="inline-flex items-center rounded-xl bg-blue-50 px-3 py-2 text-sm font-medium text-blue-600"> #1 Vos boutiques en ligne en un clic </span>
 
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl sm:tracking-tight xl:text-7xl">La Boutique comme chez-toi .</h1>
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl sm:tracking-tight xl:text-7xl"> Le commerce le plus proche de chez vous.</h1>
           </div>
 
           <div className="mt-6 lg:mt-auto">

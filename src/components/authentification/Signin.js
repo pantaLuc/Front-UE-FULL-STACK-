@@ -1,13 +1,29 @@
-import React, { useContext ,useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext ,useState ,useEffect} from 'react';
+import { Link ,Navigate} from 'react-router-dom';
 import {Context} from "../../Context"
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 const Signin = () => {
-   const {state ,signin,regexPass,regexUsername}=useContext(Context);
+   const {state ,signin,regexPass,regexUsername ,getCookie,isValidToken,tokeValid}=useContext(Context);
+   const [firstRender, setFirstRender] = useState(false);
+   
    const [errorHandler ,setErrorHandler]=useState({
     usernameError:"",
     passwordError:"",
     showAlert:false
 })
+const data = getCookie();
+  const user = data?jwt_decode(data) : "";
+
+  useEffect(() => {
+    if (!firstRender) {
+      console.log("le token", getCookie());
+      isValidToken(getCookie());   
+      setFirstRender(true)
+    }
+  }, [getCookie, isValidToken ,firstRender]);
+  console.log("c' est valide", tokeValid);
+  const navigate = useNavigate();
     return (
         <section className="py-3 bg-gray-50 sm:py-3 lg:py-3">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -124,7 +140,10 @@ const Signin = () => {
                                                    showAlert:true
                                                 })
                                             }else{
-                                              signin()
+                                              signin();
+                                              tokeValid?(user.roles[0].authority==="Admin"?navigate("/admin"):
+                                              user.roles[0].authority==="Vendeur-livreur"?navigate("/vendeur"):console.log("aucun role")):console.log("pas connécté")
+                                            
                                             }  
                                         }}
                                     className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">

@@ -4,7 +4,7 @@ import logo from'../../images/fullStack.png'
 const Footer = () => {
     return (
         <footer className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <div className="px-4 mx-auto lg:px-8 sm:px-6 max-w-7xl">
+           <div className="px-4 mx-auto lg:px-8 sm:px-6 max-w-7xl">
         <div className="grid grid-cols-1 gap-y-12 sm:gap-x-8 sm:gap-y-16 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 lg:gap-x-12 xl:gap-x-16">
             <div className="lg:col-span-2 sm:col-span-3 xl:col-span-3">
                 <div className="lg:max-w-sm">
@@ -29,7 +29,7 @@ const Footer = () => {
 
             <div>
                 <p className="text-xs font-bold tracking-widest text-gray-900 uppercase">AIDE</p>
-                <ul className="mt-12 space-y-5">
+                <ul className="mt-8 space-y-5">
                     <li>
                      <li>
                         <p className='text-xs'> Tel : (+33) 695970534</p>
@@ -46,7 +46,7 @@ const Footer = () => {
         <hr className="mt-12 border-gray-200 sm:mt-16 lg:mt-20" />
 
         <div className="flex flex-col mt-8 sm:items-center sm:flex-row sm:justify-between">
-            <p className="text-sm font-normal text-gray-600">© Copyright 2022. Tout droits resevés</p>
+            <p className="text-sm font-normal text-gray-600">©Copyright 2023.Luc & Ichraq Tout droits resevés</p>
             
         </div>
     </div>
