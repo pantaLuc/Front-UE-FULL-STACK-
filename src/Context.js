@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import Cookies from "js-cookie";
 
 
+
 const user={
     username:"",
     password:"",
@@ -54,6 +55,7 @@ const Provider=({children})=>{
     const[token , setToken]=useState()
     const[tokeValid ,setTokenValid]=useState(false)
     const[userId ,setUserId]=useState()
+    
     //signin
     const signin=useCallback(async()=>{
       !! state.username && state.password &&
@@ -66,7 +68,8 @@ const Provider=({children})=>{
           const jwt=jwt_decode(data)
           setToken(data)
         //  const date=new Date(jwt)
-        localStorage.setItem('data',JSON.stringify(data))
+       // localStorage.setItem('data',JSON.stringify(data))
+       setTokenValid(data)
         Cookies.set('token' ,data)
           if(jwt.roles[0].authority==="Admin"){
              console.log("c'est un admin")

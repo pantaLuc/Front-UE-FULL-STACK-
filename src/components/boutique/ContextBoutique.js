@@ -226,6 +226,15 @@ const ProviderBoutique = ({ children }) => {
         }
       );
   };
+  const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
   const value = useMemo(() => {
     return {
       state,
@@ -242,6 +251,7 @@ const ProviderBoutique = ({ children }) => {
       deleteBoutique,
       updateBoutique,
       perPage,
+      getFormattedDate,
       pageCount,
     };
   }, [

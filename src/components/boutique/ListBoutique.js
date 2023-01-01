@@ -5,7 +5,7 @@ import Pagination from "../Pagination";
 import { ContextBoutique } from "./ContextBoutique";
 
 const ListBoutique = () => {
-  const { allboutique, datalisteboutique, perPage, pageCount } =
+  const { allboutique, datalisteboutique, perPage, pageCount,getFormattedDate } =
     useContext(ContextBoutique);
   const [firstRender, setFirstRender] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -15,7 +15,6 @@ const ListBoutique = () => {
       allboutique();
       setFirstRender(true);
     }
-    console.log(datalisteboutique);
   }, [firstRender, allboutique]);
   const slice = datalisteboutique?.slice(offset, offset + perPage);
   const handlePageClick = (e) => {
@@ -55,15 +54,7 @@ const ListBoutique = () => {
       // Return a message indicating the open and close times for the day
       return `Ouvert de ${times} ce ${currentDay}.`;
     }
-  const getFormattedDate = (dateString) => {
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("fr-FR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
+  
 
   return (
     <section className="py-10 bg-white sm:py-14 lg:py-14">

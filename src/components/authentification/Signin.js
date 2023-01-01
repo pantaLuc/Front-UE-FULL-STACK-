@@ -1,11 +1,12 @@
 import React, { useContext ,useState ,useEffect} from 'react';
-import { Link ,Navigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {Context} from "../../Context"
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 const Signin = () => {
    const {state ,signin,regexPass,regexUsername ,getCookie,isValidToken,tokeValid}=useContext(Context);
    const [firstRender, setFirstRender] = useState(false);
+   const navigate = useNavigate();
    
    const [errorHandler ,setErrorHandler]=useState({
     usernameError:"",
@@ -17,13 +18,12 @@ const data = getCookie();
 
   useEffect(() => {
     if (!firstRender) {
-      console.log("le token", getCookie());
       isValidToken(getCookie());   
       setFirstRender(true)
     }
-  }, [getCookie, isValidToken ,firstRender]);
-  console.log("c' est valide", tokeValid);
-  const navigate = useNavigate();
+  }, [getCookie, isValidToken ,firstRender ,tokeValid]);
+  tokeValid?(user.roles[0].authority==="Admin"?navigate("/admin"):
+  user.roles[0].authority==="Vendeur-livreur"?navigate("/vendeur"):console.log("aucun role")):console.log("pas connécté")
     return (
         <section className="py-3 bg-gray-50 sm:py-3 lg:py-3">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -98,7 +98,7 @@ const data = getCookie();
                                     <div className="flex items-center justify-between">
                                         <label for="" className="text-base font-medium text-gray-900"> Password </label>
     
-                                        <a href="#" title="" className="text-sm font-medium text-orange-500 transition-all duration-200 hover:text-orange-600 focus:text-orange-600 hover:underline"> mot de passe oublié? </a>
+                                        <Link href="#" title="" className="text-sm font-medium text-orange-500 transition-all duration-200 hover:text-orange-600 focus:text-orange-600 hover:underline"> mot de passe oublié? </Link>
                                     </div>
                                     <div className="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
                                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -140,11 +140,11 @@ const data = getCookie();
                                                    showAlert:true
                                                 })
                                             }else{
-                                              signin();
-                                              tokeValid?(user.roles[0].authority==="Admin"?navigate("/admin"):
-                                              user.roles[0].authority==="Vendeur-livreur"?navigate("/vendeur"):console.log("aucun role")):console.log("pas connécté")
-                                            
+                                                signin()  
+                                               
                                             }  
+                                               
+                                           
                                         }}
                                     className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                         connectez-vous

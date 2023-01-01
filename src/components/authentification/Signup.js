@@ -1,5 +1,5 @@
 import React ,{ useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {Context} from "../../Context"
 
 
@@ -12,7 +12,7 @@ const Signup = () => {
         showPassError:true,
         showErrorName:true 
     })
-    
+    const navigate = useNavigate();
     return (
         <section className="py-7 bg-gray-50 sm:py-12 lg:py-12">
         <div className="px-4 mx-auto max-w-7xl sm:px-5 lg:px-7">
@@ -141,6 +141,7 @@ const Signup = () => {
                                             })
                                         }else{
                                             signup()
+                                           navigate("/signin") 
                                         }
                                        
                                     }} type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">

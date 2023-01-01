@@ -16,6 +16,7 @@ const AddBoutique = () => {
     perPage,
     pageCount,
     deleteBoutique,
+    getFormattedDate
   } = useContext(ContextBoutique);
   const [firstRender, setFirstRender] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -33,8 +34,6 @@ const AddBoutique = () => {
 
   const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage);
 
-  console.log("la liste", slice);
-
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
     setOffset(selectedPage + 1);
@@ -43,8 +42,7 @@ const AddBoutique = () => {
   const filtreedBoutique = slice.filter((boutique) =>
     boutique.nom.toLowerCase().includes(searchField.toLowerCase())
   );
-  console.log("filter", filtreedBoutique);
-  //la liste des horaires
+ 
   const listHoraire = (e) => {
     setListesdeshoraires(e);
   };
@@ -143,7 +141,8 @@ const AddBoutique = () => {
                               </td>
                               <td class="py-3 px-6 text-center">
                                 <span class="">
-                                  {boutiq.dateCreationBoutique}
+                                  {getFormattedDate(boutiq.dateCreationBoutique)}
+                                
                                 </span>
                               </td>
                               <td class="py-3 px-6 text-center">
