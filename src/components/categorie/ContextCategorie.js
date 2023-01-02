@@ -53,8 +53,8 @@ export const ContextCategorie=React.createContext()
 const ProviderCategorie=({children})=>{
     const[state ,dispatch]=useReducer(reducer ,categorie);
     const[data ,setData]=useState([]);
-    const [pageCount, setPageCount] = useState(0);
-    const [perPage] = useState(6);
+    const [itemsPerPage] = useState(6);
+    const [totalPages ,setTotalPages]=useState()
     const addcategorie=async()=>{
         !! state.nom && state.description && 
         await axios.post(`${process.env.REACT_APP_API_URL}/categorie`, {
@@ -83,7 +83,7 @@ const ProviderCategorie=({children})=>{
     const allcategorie=useCallback(async()=>{
         await axios.get(`${process.env.REACT_APP_API_URL}/categorie/list`).then((response)=>{
             setData(response.data);
-            setPageCount(Math.ceil(response.data.length/perPage))
+            setTotalPages(Math.ceil(response.data.length/itemsPerPage))
            
            }).catch((error)=>{
             console.log( "l'erreur " ,error.message);
@@ -93,21 +93,21 @@ const ProviderCategorie=({children})=>{
                 type:"allcategorie",
                 data
             })
-    },[data ,perPage])
+    },[data ])
     
 
     const value=useMemo(()=>{
         return {
             state,
             data,
-            pageCount,
-            perPage,
+            itemsPerPage,
+            totalPages,
             addcategorie,
             delcategorie,
             allcategorie,
             updatecategorie
         }
-    },[allcategorie ,data, perPage])
+    },[allcategorie ,data])
     
     return <ContextCategorie.Provider value={value}>{children}</ContextCategorie.Provider>
 }

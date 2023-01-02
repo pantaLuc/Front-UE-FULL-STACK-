@@ -51,6 +51,9 @@ export const ContextProduit = React.createContext();
 const ProviderProduit = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, produit);
   const [produitlist, setProduitlist] = useState([]);
+  const [itemsPerPage] = useState(8);
+  const [totalPages ,setTotalPages]=useState()
+  
 
   const addproduit = async () => {
     axios
@@ -80,6 +83,7 @@ const ProviderProduit = ({ children }) => {
     await axios.get(`http://localhost:8080/produit/list`).then(
       (response) => {
         setProduitlist(response.data);
+        setTotalPages(Math.ceil(response.data.length/itemsPerPage))
       },
       (error) => {
         console.log("l'erreur ", error.message);
@@ -127,6 +131,8 @@ const ProviderProduit = ({ children }) => {
       addproduit,
       allproduit,
       deleteProduit,
+      itemsPerPage,
+      totalPages,
       updateProduit,
     };
   }, [state.listproduit]);

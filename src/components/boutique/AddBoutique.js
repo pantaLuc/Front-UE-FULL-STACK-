@@ -4,6 +4,7 @@ import { Context } from "../../Context";
 import AddHoraire from "./AddHoraire";
 import { ContextBoutique } from "./ContextBoutique";
 import jwt_decode from "jwt-decode";
+import Pagination from "../Pagination";
 
 const AddBoutique = () => {
   const [listesdeshoraires, setListesdeshoraires] = useState([]);
@@ -13,8 +14,8 @@ const AddBoutique = () => {
     datalisteboutiquebyuser,
     addboutique,
     allboutiquebyuser,
-    perPage,
-    pageCount,
+    itemsPerPage,
+    totalPages,
     deleteBoutique,
     getFormattedDate
   } = useContext(ContextBoutique);
@@ -22,6 +23,7 @@ const AddBoutique = () => {
   const [offset, setOffset] = useState(0);
   const { getCookie, searchByUsername, userId } = useContext(Context);
   const data = getCookie();
+  const [currentPage, setCurrentPage] = useState(1);
   const user = data ? jwt_decode(data) : "";
   const [showModalupdate, setShowModalupdate] = React.useState(false);
   useEffect(() => {
@@ -32,17 +34,23 @@ const AddBoutique = () => {
     }
   }, [firstRender, offset, allboutiquebyuser, user, searchByUsername]);
 
-  const slice = datalisteboutiquebyuser?.slice(offset, offset + perPage);
+  
 
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1);
-  };
+  
   const [searchField, setsearchField] = useState("");
-  const filtreedBoutique = slice.filter((boutique) =>
-    boutique.nom.toLowerCase().includes(searchField.toLowerCase())
-  );
- 
+
+ let  paginatedBoutique;
+  if (currentPage === 1) {
+    paginatedBoutique = datalisteboutiquebyuser.slice(0, itemsPerPage);
+  } else {
+    paginatedBoutique= datalisteboutiquebyuser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  }
+  const filtreedBoutique = paginatedBoutique.filter((boutique) =>
+  boutique.nom.toLowerCase().includes(searchField.toLowerCase())
+);
+  const handlePageChange = page => {
+        setCurrentPage(page);
+      };
   const listHoraire = (e) => {
     setListesdeshoraires(e);
   };
@@ -202,17 +210,11 @@ const AddBoutique = () => {
                         })}
                       </tbody>
                     </table>
-                    <ReactPaginate
-                    previousLabel={"<<"}
-                    previousClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    nextLabel={">>"}
-                    nextLinkClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    pageCount={pageCount}
-                    onPageChange={handlePageClick}
-                    containerClassName="flex cursor-pointer list-none justify-center space-x-6 p-5"
-                    disabledClassName="border-1 border-solid  px-1 py-1"
-                    activeClassName="border-1 border-solid  px-1 py-1"
-                  />
+                    <Pagination
+             currentPage={currentPage}
+             totalPages={totalPages}
+             handlePageChange={handlePageChange}
+            />
                   </div>
                 </div>
               </div>

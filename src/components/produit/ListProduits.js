@@ -1,11 +1,16 @@
 import React ,{useContext,useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '../Pagination';
 import {ContextProduit} from'./ContextProduit'
 
 const ListProduits = () => {
-    const {allproduit,produitlist}=useContext(ContextProduit);
+    const {allproduit,produitlist, itemsPerPage,totalPages}=useContext(ContextProduit);
     const [firstRender ,setFirstRender]=useState(false);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = page => {
+        setCurrentPage(page);
+      };
+    
     useEffect(() => {
     if (!firstRender) {
         allproduit();
@@ -13,23 +18,15 @@ const ListProduits = () => {
     }
     console.log(produitlist)
   }, [firstRender ,allproduit,produitlist])
- const produits=[
-    {
-        image:"https://img.freepik.com/photos-gratuite/chemise-decontractee-affaires-blanc-photoshoot-exterieur-gros-plan_53876-119744.jpg",
-        nom:"Chemise Casual",
-        prix :"200",
-        quantité:"122"
-    },
 
-    {
-        image:"https://img.freepik.com/vecteurs-libre/doudoune-sans-manches-noire-maquette-gilet-duvet_107791-1608.jpg",
-        nom:"Veste sans Manche",
-        prix :"120",
-        quantité:"192"
-    },
 
- ]
-
+  let paginatedPrduit;
+  if (currentPage === 1) {
+    paginatedPrduit = produitlist.slice(0, itemsPerPage);
+  } else {
+    paginatedPrduit = produitlist.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  }
+console.log("element par page",itemsPerPage)
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -38,7 +35,7 @@ const ListProduits = () => {
             </div>
     
             <div className="grid grid-cols-1 gap-5 mt-12 sm:grid-cols-2 lg:grid-cols-4 sm:mt-16 sm:gap-6">
-                {produitlist.map((produit)=>{
+                {paginatedPrduit.map((produit)=>{
           
                         return(  <div className="relative overflow-hidden bg-white rounded-lg shadow-lg group">
                         <div className="absolute z-10 top-5 left-5">
@@ -74,6 +71,11 @@ const ListProduits = () => {
                 })}
           
             </div>
+            <Pagination
+             currentPage={currentPage}
+             totalPages={totalPages}
+             handlePageChange={handlePageChange}
+            />
         </div>
     </section>
     );

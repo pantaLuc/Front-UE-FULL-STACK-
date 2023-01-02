@@ -79,8 +79,9 @@ const ProviderBoutique = ({ children }) => {
   const [datalisteboutique, setDatalistboutique] = useState([]);
   const [datalisteboutiquebyuser, setDatalistboutiquebyuser] = useState([]);
   const [idhoraire, setIdhoraire] = useState();
-  const [pageCount, setPageCount] = useState(0);
-  const [perPage] = useState(6);
+  const [itemsPerPage] = useState(6);
+  const [totalPages ,setTotalPages]=useState()
+  
   const addboutique = async () => {
     await axios
       .post(
@@ -170,7 +171,7 @@ const ProviderBoutique = ({ children }) => {
       .get(`http://localhost:8080/boutique/list`)
       .then((response) => {
         setDatalistboutique(response.data);
-        setPageCount(Math.ceil(response.data.length / perPage));
+        setTotalPages(Math.ceil(response.data.length/itemsPerPage))
       })
       .catch((error) => {
         console.log("l'erreur ", error.message);
@@ -186,6 +187,7 @@ const ProviderBoutique = ({ children }) => {
       .get(`http://localhost:8080/boutique/searbyUserName?username=${e}`)
       .then((response) => {
         setDatalistboutiquebyuser(response.data);
+        setTotalPages(Math.ceil(response.data.length/itemsPerPage))
       })
       .catch((error) => {
         console.log("l'erreur ", error.message);
@@ -250,9 +252,9 @@ const ProviderBoutique = ({ children }) => {
       allboutiquebyuser,
       deleteBoutique,
       updateBoutique,
-      perPage,
+      itemsPerPage,
       getFormattedDate,
-      pageCount,
+       totalPages,
     };
   }, [
     state.listintervalle,
