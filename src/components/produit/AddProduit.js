@@ -5,6 +5,7 @@ import { ContextBoutique } from "../boutique/ContextBoutique";
 import { MultiSelect } from "react-multi-select-component";
 import jwt_decode from "jwt-decode";
 import Select from "react-select";
+import Pagination from "../Pagination";
 
 const AddProduit = () => {
   const datauser = JSON.parse(localStorage.getItem("data"));
@@ -13,9 +14,10 @@ const AddProduit = () => {
   const [selectedBoutique, setSelectedBoutique] = useState("");
   const [showModal, setShowModal] = React.useState(false);
   const [showModalupdate, setShowModalupdate] = React.useState(false);
-  const { state, addproduit, allproduit, produitlist ,deleteProduit , updateProduit } =
+  const { state, addproduit, allproduit, produitlist ,deleteProduit , updateProduit ,itemsPerPage,totalPages} =
     useContext(ContextProduit);
   const { allcategorie, data } = useContext(ContextCategorie);
+  const [currentPage, setCurrentPage] = useState(1);
   const {
     allboutique,
     datalisteboutique,
@@ -50,6 +52,15 @@ const AddProduit = () => {
     await addproduit();
     setShowModal(false);
   };
+  const handlePageChange = page => {
+    setCurrentPage(page);
+  };
+  let paginatedPrduit;
+  if (currentPage === 1) {
+    paginatedPrduit = produitlist.slice(0, itemsPerPage);
+  } else {
+    paginatedPrduit = produitlist.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  }
   return (
     <div className=" bg-gray-100">
       <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
@@ -194,6 +205,11 @@ const AddProduit = () => {
                     </tbody>
                   </table>
                 </div>
+                <Pagination
+             currentPage={currentPage}
+             totalPages={totalPages}
+             handlePageChange={handlePageChange}
+            />
               </div>
             </div>
           </div>

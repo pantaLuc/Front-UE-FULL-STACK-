@@ -2,27 +2,33 @@ import React ,{ useContext, useState , useEffect} from 'react';
 import {ContextCategorie} from "./ContextCategorie"
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
+import Pagination from '../Pagination';
 
 const ListCategorie = () => {
     const [firstRender ,setFirstRender]=useState(false)
-    const [offset, setOffset] = useState(0);
-    const {allcategorie,data,pageCount,perPage}=useContext(ContextCategorie);
+    const [currentPage, setCurrentPage] = useState(1);
+    const {allcategorie,data, itemsPerPage,totalPages}=useContext(ContextCategorie);
     useEffect(() => {
         if (!firstRender) {
             allcategorie();
             setFirstRender(true) 
         }
     }, [firstRender,allcategorie])
-    const slice = data?.slice(offset, offset + perPage)
-    console.log(data)
-    const handlePageClick = (e) => {
-        const selectedPage = e.selected;
-        setOffset(selectedPage + 1)
-    };
-    const [searchField, setsearchField] = useState('');
-    const filtreedcategory=slice.filter(category=>(
-      category.nom.toLowerCase().includes(searchField.toLowerCase())
-  ));
+    const handlePageChange = page => {
+        setCurrentPage(page);
+      };
+    
+      let paginatedCategorie;
+      if (currentPage === 1) {
+        paginatedCategorie = data.slice(0, itemsPerPage);
+      } else {
+        paginatedCategorie= data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+      }
+      
+      const [searchField, setsearchField] = useState("");
+      const filtreedcategory = paginatedCategorie.filter((category) =>
+        category.nom.toLowerCase().includes(searchField.toLowerCase())
+      );
     return (
         <section className="py-10 bg-white sm:py-14 lg:py-14">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -63,17 +69,11 @@ const ListCategorie = () => {
                     })
                 }   
             </div>
-            <ReactPaginate
-                    previousLabel={"<<"}
-                    previousClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    nextLabel={">>"}
-                    nextLinkClassName="relative inline-flex items-center justify-center px-1 py-1 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10"
-                    pageCount={pageCount}
-                    onPageChange={handlePageClick}
-                    containerClassName="flex cursor-pointer list-none justify-center space-x-6 p-5"
-                    disabledClassName="border-1 border-solid  px-1 py-1"
-                    activeClassName="border-1 border-solid  px-1 py-1"
-                  />
+            <Pagination
+             currentPage={currentPage}
+             totalPages={totalPages}
+             handlePageChange={handlePageChange}
+            />
         </div>
     </section>
     );

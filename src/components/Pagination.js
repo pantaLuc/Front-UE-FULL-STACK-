@@ -1,38 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const Pagination = () => {
-    return (
-        <div className="py-6 bg-white center">
-        <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-            <nav className="relative flex justify-center -space-x-px rounded-md">
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 w-9 rounded-l-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10">
-                    <span className="sr-only"> Previous </span>
-                    <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </a>
-
-                <Link href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 1 </Link>
-
-                <a href="#" title="" aria-current="page" className="relative z-10 inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-900 bg-white border border-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 2 </a>
-
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 3 </a>
-
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 4 </a>
-
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9"> 5 </a>
-
-                <a href="#" title="" className="relative inline-flex items-center justify-center px-3 py-2 text-sm font-bold text-gray-400 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:z-10 w-9 rounded-r-md">
-                    <span className="sr-only"> Next </span>
-                    <svg className="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
-            </nav>
-        </div>
+const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
+  return (
+    <div className="flex justify-center m-8">
+      <button
+        className="px-2 py-1 text-sm font-bold leading-5 text-gray-700 transition duration-150 ease-in-out rounded-md hover:text-gray-500 focus:outline-none focus:text-gray-500"
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+       précedent
+      </button>
+      <div className="inline-flex">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+          <button
+            key={page}
+            className={`px-2 py-1 text-sm font-bold leading-5 text-gray-700 transition duration-150 ease-in-out rounded-md hover:text-gray-500 focus:outline-none focus:text-gray-500 ${
+              page === currentPage ? 'bg-gray-100 text-gray-800' : 'bg-transparent'
+            }`}
+            onClick={() => handlePageChange(page)}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+      <button
+        className="px-2 py-1 text-sm font-bold leading-5 text-gray-700 transition duration-150 ease-in-out rounded-md hover:text-gray-500 focus:outline-none focus:text-gray-500"
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        suivant
+      </button>
     </div>
-    );
+  );
 };
 
 export default Pagination;
