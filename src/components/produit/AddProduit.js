@@ -6,9 +6,11 @@ import { MultiSelect } from "react-multi-select-component";
 import jwt_decode from "jwt-decode";
 import Select from "react-select";
 import Pagination from "../Pagination";
+import { Context } from "../../Context";
 
 const AddProduit = () => {
-  const datauser = JSON.parse(localStorage.getItem("data"));
+  const {getCookie}=useContext(Context)
+  const datauser = getCookie();
   const user = datauser ? jwt_decode(datauser) : "";
   const [selectedCat, setSelectedCat] = useState([]);
   const [selectedBoutique, setSelectedBoutique] = useState("");
@@ -113,15 +115,15 @@ const AddProduit = () => {
                       </tr>
                     </thead>
                     <tbody className="text-gray-600 text-sm font-light">
-                      {produitlist.map((produit) => (
+                      {paginatedPrduit.map((produit) => (
                       <tr className="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex items-center">
                                   <div class="mr-2">
                                     <img
                                       src={
-                                        produit.image
-                                          ? produit.image
+                                        produit.imageUrl
+                                          ? produit.imageUrl
                                           :"https://img.freepik.com/vecteurs-libre/achetez-signe-que-nous-sommes-ouverts_52683-38687.jpg"
                                       }
                                       className="object-contain"
@@ -134,7 +136,7 @@ const AddProduit = () => {
                                 </div>
                               </td>
                               <td class="py-3 px-6 text-center">
-                                    <span class="">{produit.description}</span>
+                                    <span class="">{produit.description.length>30?produit.description.substring(0,20)+"...":produit.description}</span>
                               </td>
                               <td class="py-3 px-6 text-center">
                                     <span class="">{produit.prix}</span>
@@ -379,7 +381,8 @@ const AddProduit = () => {
                           <div className="mt-1">
                             <MultiSelect
                               options={optionscat}
-                              value={showModalupdate?state.produitUpdate.categorieList:selectedCat}
+                              value={selectedCat}
+                              defaultValue={showModalupdate?state.produitUpdate.categorieList:null}
                               onChange={setSelectedCat}
                               labelledBy="Select"
                             />
@@ -397,7 +400,8 @@ const AddProduit = () => {
                           <div className="mt-1">
                             <Select
                               options={optionsbout}
-                              value={showModalupdate?state.produitUpdate.boutique:selectedBoutique}
+                              value={selectedBoutique}
+                              defaultInputValue={showModalupdate?state.produitUpdate.boutique.nom:null}
                               onChange={setSelectedBoutique}
                               labelledBy="Select"
                             />
@@ -422,6 +426,7 @@ const AddProduit = () => {
                    
                     onClick={(e) => {
                         e.preventDefault()
+                        
                         showModalupdate? updateProduit(): ajouterproduit(e) 
                         setShowModalupdate(false)
                         setShowModal(false)
