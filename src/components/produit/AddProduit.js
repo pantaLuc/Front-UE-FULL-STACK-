@@ -13,6 +13,7 @@ const AddProduit = () => {
   const datauser = getCookie();
   const user = datauser ? jwt_decode(datauser) : "";
   const [selectedCat, setSelectedCat] = useState([]);
+  const [listproduitUser, setListproduitUser] = useState([]);
   const [selectedBoutique, setSelectedBoutique] = useState("");
   const [showModal, setShowModal] = React.useState(false);
   const [showModalupdate, setShowModalupdate] = React.useState(false);
@@ -35,8 +36,14 @@ const AddProduit = () => {
       allproduit();
       setFirstRender(true);
     }
+    setListproduitUser(
+      produitlist.filter((produit) =>
+      produit.boutique.utilisateur.username.toLowerCase().includes(user.sub)
+    )
+    );
     console.log(produitlist);
-  }, [firstRender, allcategorie, allproduit]);
+    console.log(listproduitUser);
+  }, [firstRender, allcategorie, allproduit,produitlist]);
   let optionscat = data.map((categorie) => ({
     label: categorie.nom,
     value: categorie.id,
@@ -59,9 +66,9 @@ const AddProduit = () => {
   };
   let paginatedPrduit;
   if (currentPage === 1) {
-    paginatedPrduit = produitlist.slice(0, itemsPerPage);
+    paginatedPrduit = listproduitUser.slice(0, itemsPerPage);
   } else {
-    paginatedPrduit = produitlist.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    paginatedPrduit = listproduitUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }
   return (
     <div className=" bg-gray-100">
