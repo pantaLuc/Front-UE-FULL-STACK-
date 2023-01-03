@@ -134,6 +134,7 @@ const ProviderProduit = ({ children }) => {
       itemsPerPage,
       totalPages,
       updateProduit,
+      setTotalPages
     };
   }, [state.listproduit]);
 
