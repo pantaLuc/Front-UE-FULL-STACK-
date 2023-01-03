@@ -43,7 +43,7 @@ console.log("element par page",itemsPerPage)
                         </div>
                         <div className="overflow-hidden aspect-w-4 aspect-h-3">
                             <img className="object-cover w-full h-full transition-all duration-300 group-hover:scale-125" 
-                            src={produit.image?produit.image:"https://img.freepik.com/free-vector/online-wishes-list-concept-illustration_114360-3900.jpg"} alt="" />
+                            src={produit.imageUrl?produit.imageUrl:"https://img.freepik.com/free-vector/online-wishes-list-concept-illustration_114360-3900.jpg"} alt="" />
                         </div>
                         <div className="px-5 py-5">
                             <h3 className="text-base font-bold text-gray-900">
