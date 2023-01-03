@@ -14,10 +14,11 @@ const AddProduit = () => {
   const user = datauser ? jwt_decode(datauser) : "";
   const [selectedCat, setSelectedCat] = useState([]);
   const [listproduitUser, setListproduitUser] = useState([]);
-  const [selectedBoutique, setSelectedBoutique] = useState("");
+  const [selectedBoutique, setSelectedBoutique] = useState();
+  const [totals, setTotals] = useState();
   const [showModal, setShowModal] = React.useState(false);
   const [showModalupdate, setShowModalupdate] = React.useState(false);
-  const { state, addproduit, allproduit, produitlist ,deleteProduit , updateProduit ,itemsPerPage,totalPages} =
+  const { state, addproduit, allproduit, produitlist ,deleteProduit , updateProduit ,itemsPerPage,totalPages,setTotalPages} =
     useContext(ContextProduit);
   const { allcategorie, data } = useContext(ContextCategorie);
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,8 +42,11 @@ const AddProduit = () => {
       produit.boutique.utilisateur.username.toLowerCase().includes(user.sub)
     )
     );
+    setTotals(Math.ceil(listproduitUser.length/itemsPerPage))
     console.log(produitlist);
     console.log(listproduitUser);
+    console.log(Math.ceil(listproduitUser.length/itemsPerPage))
+
   }, [firstRender, allcategorie, allproduit,produitlist]);
   let optionscat = data.map((categorie) => ({
     label: categorie.nom,
@@ -52,6 +56,16 @@ const AddProduit = () => {
     label: boutique.nom,
     value: boutique.id,
   }));
+  const modifierproduit = async (e) => {
+    e.preventDefault();
+    state.produitUpdate.boutique = { id: selectedBoutique.value };
+    state.produitUpdate.categorieList= selectedCat.map((produit) => ({
+      id: produit.value,
+    }));
+    await updateProduit();
+    setSelectedCat([]);
+    setSelectedBoutique();
+  };
   const ajouterproduit = async (e) => {
     e.preventDefault();
     state.boutique = { id: selectedBoutique.value };
@@ -152,7 +166,9 @@ const AddProduit = () => {
                                     <span class="">{produit.quantité}</span>
                               </td>
                               <td class="py-3 px-6 text-center">
-                                    <span class="">{produit.categorieList[0].nom}</span>
+                                    <span class="">
+                                    {produit.categorieList.map((categorie) => (<p>{categorie.nom}</p>))}
+                                    </span>
                               </td>
                               <td class="py-3 px-6 text-center">
                                     <span class="">{produit.boutique.nom}</span>
@@ -165,7 +181,15 @@ const AddProduit = () => {
                                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                                       onClick={(e) => {
                                        state.produitUpdate=produit;
-                                       setShowModalupdate(true)
+                                        setSelectedCat( state.produitUpdate.categorieList.map((categorie) => ({
+                                        label: categorie.nom,
+                                        value: categorie.id,
+                                        })))
+                                        setSelectedBoutique({
+                                        label: state.produitUpdate.boutique.nom,
+                                        value: state.produitUpdate.boutique.id,
+                                        })
+                                         setShowModalupdate(true)
                                       }}
                                     >
                                       <svg
@@ -216,7 +240,7 @@ const AddProduit = () => {
                 </div>
                 <Pagination
              currentPage={currentPage}
-             totalPages={totalPages}
+             totalPages={totals}
              handlePageChange={handlePageChange}
             />
               </div>
@@ -389,10 +413,12 @@ const AddProduit = () => {
                             <MultiSelect
                               options={optionscat}
                               value={selectedCat}
-                              defaultValue={showModalupdate?state.produitUpdate.categorieList:null}
+                              defaultValue={selectedCat}
                               onChange={setSelectedCat}
                               labelledBy="Select"
                             />
+                            {console.log(selectedCat)}
+                            
                           </div>
                         </div>
 
@@ -408,7 +434,7 @@ const AddProduit = () => {
                             <Select
                               options={optionsbout}
                               value={selectedBoutique}
-                              defaultInputValue={showModalupdate?state.produitUpdate.boutique.nom:null}
+                              defaultValue={selectedBoutique}
                               onChange={setSelectedBoutique}
                               labelledBy="Select"
                             />
@@ -434,7 +460,7 @@ const AddProduit = () => {
                     onClick={(e) => {
                         e.preventDefault()
                         
-                        showModalupdate? updateProduit(): ajouterproduit(e) 
+                        showModalupdate? modifierproduit(e): ajouterproduit(e) 
                         setShowModalupdate(false)
                         setShowModal(false)
                     }}
