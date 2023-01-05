@@ -1,5 +1,6 @@
 import React ,{useContext,useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
+import Select from "react-select";
 import Pagination from '../Pagination';
 import {ContextProduit} from'./ContextProduit'
 
@@ -7,6 +8,7 @@ const ListProduits = () => {
     const {allproduit,produitlist, itemsPerPage,totalPages}=useContext(ContextProduit);
     const [firstRender ,setFirstRender]=useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+   
     const handlePageChange = page => {
         setCurrentPage(page);
       };
@@ -16,26 +18,66 @@ const ListProduits = () => {
         allproduit();
         setFirstRender(true) 
     }
-    console.log(produitlist)
+    
   }, [firstRender ,allproduit,produitlist])
+  
+  const [criteria , setCriteria]=useState("nom");
+  const [search ,setChearch]=useState();
 
+ 
+  
+const handleSearchChange = event => {
+     setChearch(event.target.value)
+  }
 
+const handleCriteriaChange = event => {
+    setCriteria(event.target.value);
+  }
+
+  
+  console.log(criteria , search)
   let paginatedPrduit;
   if (currentPage === 1) {
     paginatedPrduit = produitlist.slice(0, itemsPerPage);
   } else {
     paginatedPrduit = produitlist.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }
-console.log("element par page",itemsPerPage)
+  const filtreedProduits = paginatedPrduit.filter(product => {
+    if (typeof criteria === 'string' && typeof search === 'string') {
+      if (criteria === 'nom') {
+        return typeof product.nom === 'string' && product.nom.toLowerCase().includes(search.toLowerCase());
+      } else if (criteria === 'prix') {
+        return product.prix <= search;
+      } else if (criteria === 'categorie') {
+        return product.categorieList.some(c => c.nom.toLowerCase().includes(search.toLowerCase()));
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  });
+  
     return (
         <section className="py-12 bg-white sm:py-16 lg:py-20">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">Nos Meilleurs produits</h2>
             </div>
-    
+            <div class="mt-5 flex items-center justify-center sm:mt-0 sm:justify-end sm:space-x-7">
+            <input type="text" placeholder="Chercher" className=" m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+            onChange={handleSearchChange}
+            />
+        <select className=" m-2 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex" 
+        
+        value={criteria} onChange={handleCriteriaChange}>
+          <option value="nom">nom</option>
+          <option value="prix">prix</option>
+          <option value="categorie">categorie</option>
+        </select>
+            </div>
             <div className="grid grid-cols-1 gap-5 mt-12 sm:grid-cols-2 lg:grid-cols-4 sm:mt-16 sm:gap-6">
-                {paginatedPrduit.map((produit)=>{
+                {filtreedProduits.map((produit)=>{
           
                         return(  <div className="relative overflow-hidden bg-white rounded-lg shadow-lg group">
                         <div className="absolute z-10 top-5 left-5">
