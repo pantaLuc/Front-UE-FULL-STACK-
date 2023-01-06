@@ -50,7 +50,10 @@ const handleCriteriaChange = event => {
         return product.prix <= search;
       } else if (criteria === 'categorie') {
         return product.categorieList.some(c => c.nom.toLowerCase().includes(search.toLowerCase()));
-      } else {
+      }else if(criteria==='boutique'){
+        return product.boutique.nom.toLowerCase().includes(search.toLowerCase());
+      } 
+      else {
         return true;
       }
     } else {
@@ -74,6 +77,7 @@ const handleCriteriaChange = event => {
           <option value="nom">nom</option>
           <option value="prix">prix</option>
           <option value="categorie">categorie</option>
+          <option value="boutique">boutique</option>
         </select>
             </div>
             <div className="grid grid-cols-1 gap-5 mt-12 sm:grid-cols-2 lg:grid-cols-4 sm:mt-16 sm:gap-6">
