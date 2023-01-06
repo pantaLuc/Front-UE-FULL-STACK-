@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import Select from "react-select";
 import Pagination from '../Pagination';
 import {ContextProduit} from'./ContextProduit'
+import {Context} from '../../Context'
 
 const ListProduits = () => {
     const {allproduit,produitlist, itemsPerPage,totalPages}=useContext(ContextProduit);
+    const { setLanguageSelected,languageSelected,traduction } = useContext(Context);
     const [firstRender ,setFirstRender]=useState(false);
     const [currentPage, setCurrentPage] = useState(1);
    
@@ -18,8 +20,11 @@ const ListProduits = () => {
         allproduit();
         setFirstRender(true) 
     }
+    {traduction("pomme")}
+    console.log(languageSelected)
+
     
-  }, [firstRender ,allproduit,produitlist])
+  }, [firstRender ,allproduit,produitlist,languageSelected])
   
   const [criteria , setCriteria]=useState("nom");
   const [search ,setChearch]=useState();
@@ -94,6 +99,7 @@ const handleCriteriaChange = event => {
                         <div className="px-5 py-5">
                             <h3 className="text-base font-bold text-gray-900">
                                 <Link  title="">
+                                  
                                     {produit.nom}
                                     <span className="absolute inset-0" aria-hidden="true"></span>
                                 </Link>
