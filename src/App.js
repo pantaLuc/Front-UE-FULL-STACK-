@@ -1,5 +1,5 @@
 
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Footer from "./components/navigation/Footer";
 import NavBar from "./components/navigation/NavBar";
 import Signin from "./components/authentification/Signin";
@@ -20,7 +20,6 @@ import { Context } from "./Context";
 
 
 function App() {
-  const navigate = useNavigate();
   const { getCookie, isValidToken, tokeValid } = useContext(Context);
   const [firstRender, setFirstRender] = useState(false);
   const data = getCookie();
