@@ -70,7 +70,7 @@ const AddBoutique = () => {
   const [showModal, setShowModal] = React.useState(false);
   return (
     <>
-      <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
+      <div className="flex flex-wrap -mx-3 mb-6 bg-transparent">
         <div className="flex items-center justify-center w-full h-full px-3 py-4 sm:p-4">
           <div class="bg-white py-12 sm:py-16 lg:py-20">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

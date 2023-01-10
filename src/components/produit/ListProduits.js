@@ -19,12 +19,13 @@ const ListProduits = () => {
     if (!firstRender) {
         allproduit();
         setFirstRender(true) 
+      
     }
     {traduction("pomme")}
     console.log(languageSelected)
 
     
-  }, [firstRender ,allproduit,produitlist,languageSelected])
+  }, [firstRender ,allproduit,produitlist,languageSelected ,traduction])
   
   const [criteria , setCriteria]=useState("nom");
   const [search ,setChearch]=useState();
@@ -38,7 +39,7 @@ const handleSearchChange = event => {
 const handleCriteriaChange = event => {
     setCriteria(event.target.value);
   }
-
+  
   
   console.log(criteria , search)
   let paginatedPrduit;
@@ -99,7 +100,7 @@ const handleCriteriaChange = event => {
                         <div className="px-5 py-5">
                             <h3 className="text-base font-bold text-gray-900">
                                 <Link  title="">
-                                  
+                                   
                                     {produit.nom}
                                     <span className="absolute inset-0" aria-hidden="true"></span>
                                 </Link>
