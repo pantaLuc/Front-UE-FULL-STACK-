@@ -85,7 +85,7 @@ const AddProduit = () => {
     paginatedPrduit = listproduitUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }
   return (
-    <div className=" bg-gray-100">
+    <div className=" bg-transparent">
       <div className="flex items-center justify-center w-full h-full px-4 py-5 sm:p-4">
         <div class="bg-white py-12 sm:py-16 lg:py-20">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

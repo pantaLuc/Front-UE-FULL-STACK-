@@ -44,7 +44,7 @@ const AddCategorie = () => {
   return (
     <div className="flex flex-wrap -mx-3 mb-6 bg-gray-100">
       <div className="flex items-center justify-center w-full h-full px-3 py-4 sm:p-4">
-        <div class="bg-white py-12 sm:py-16 lg:py-20">
+        <div class="bg-transparent py-12 sm:py-16 lg:py-20">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center sm:justify-between">
               <div>
@@ -80,7 +80,7 @@ const AddCategorie = () => {
                   name=""
                   id=""
                   placeholder="Chercher"
-                  className="hidden m-1 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
+                  className="hidden m-1 items-center rounded-lg border border-gray-300  px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex"
                   onChange={(e) => setsearchField(e.target.value)}
                 />
               </div>
@@ -88,7 +88,7 @@ const AddCategorie = () => {
 
             <div class="mt-4 flex flex-col lg:mt-8">
               <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-3 lg:-mx-5">
-                <div className="bg-white  rounded my-6">
+                <div className="bg-transparent  rounded my-6">
                   <table className="min-w-max w-full table-auto">
                     <thead class="">
                       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

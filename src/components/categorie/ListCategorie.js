@@ -1,6 +1,6 @@
 import React ,{ useContext, useState , useEffect} from 'react';
 import {ContextCategorie} from "./ContextCategorie"
-import ReactPaginate from 'react-paginate';
+
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 

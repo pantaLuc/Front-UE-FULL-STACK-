@@ -10,13 +10,18 @@ const user={
     username:"",
     password:"",
     firstName:"",
-    lastName:"",
+    lastName:""
 };
 
 
 
 function reducer(state,action){
     switch(action.type){
+        case "traduction":{
+           return {
+            ...state
+           }
+        }
         case "signin":{
            return {
             ...state
@@ -55,6 +60,8 @@ const Provider=({children})=>{
     const[token , setToken]=useState()
     const[tokeValid ,setTokenValid]=useState(false)
     const[userId ,setUserId]=useState()
+    const[resultattraduit ,setResultattraduit]=useState()
+    const[languageSelected,setLanguageSelected]=useState('fr')
     
     //signin
     const signin=useCallback(async()=>{
@@ -104,6 +111,22 @@ const Provider=({children})=>{
         
         dispatch({type:"signup"})
     };
+   //traduction
+    const traduction=async (e)=>{
+      await axios.post(`https://libretranslate.de/translate`, {
+        q:e,
+        source:languageSelected==="fr"?"en":"fr",
+        target:languageSelected
+      })
+        .then((response) => {
+          setResultattraduit(response.data)
+          console.log(response.data)
+        }, (error) => {
+          console.log( "l' erreur " ,error.message);
+        });
+        
+        dispatch({type:"signup"})
+    };
     //get COOKie 
     const getCookie=()=>{
       return Cookies.get("token")
@@ -140,7 +163,11 @@ const Provider=({children})=>{
             getCookie,
             isValidToken,
             userId,
-            searchByUsername
+            searchByUsername,
+            traduction,
+            resultattraduit,
+            setLanguageSelected,
+            languageSelected
         }
     } ,[token ,signin ,tokeValid ,searchByUsername])
     

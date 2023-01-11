@@ -22,7 +22,7 @@ const NavBar = () => {
             name:"Boutique"
           }
       ]
-      const { getCookie, isValidToken, tokeValid } = useContext(Context);
+      const { getCookie, isValidToken, tokeValid,setLanguageSelected,languageSelected } = useContext(Context);
       const [firstRender, setFirstRender] = useState(false);
       const data = getCookie();
       const user = data ? jwt_decode(data) : "";
@@ -77,19 +77,24 @@ const NavBar = () => {
             <div class="center ml-4 mr-auto max-w-xs flex-1">
                 <label for="" class="sr-only"> Search </label>
                 <div class="relative">
-                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    </div>
 
-                    <input type="search" name="" id="" class="block w-full rounded-lg border border-gray-300 py-2 pl-10 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm" placeholder="rechercher" />
+                    <select className=" m-2 items-center rounded-lg border border-gray-300 bg-white px-3 py-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:inline-flex" 
+                    value={languageSelected} onChange={e=>setLanguageSelected(e.target.value)}>
+                    <option value="fr">Fr</option>
+                    <option value="en">En</option>
+                    </select>
                 </div>
             </div>
                 {
                     tokeValid?( 
                     <div>
-                        <p>Bienvenue {user.sub}</p>
+                    <button type="button" class="flex items-center max-w-xs rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-purple-900">
+                        <img class="object-cover w-8 h-8 bg-gray-300 rounded-full" src="https://img.freepik.com/photos-gratuite/homme-boheme-bras-croises_1368-3542.jpg" alt="" />
+                        <span class="ml-2 text-sm font-medium text-black"> {user.sub}</span>
+                        <svg class="w-4 h-4 ml-3 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
                     </div>
                     ) :(
                         <>

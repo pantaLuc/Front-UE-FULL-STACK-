@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import Select from "react-select";
 import Pagination from '../Pagination';
 import {ContextProduit} from'./ContextProduit'
+import {Context} from '../../Context'
 
 const ListProduits = () => {
     const {allproduit,produitlist, itemsPerPage,totalPages}=useContext(ContextProduit);
+    const { setLanguageSelected,languageSelected,traduction } = useContext(Context);
     const [firstRender ,setFirstRender]=useState(false);
     const [currentPage, setCurrentPage] = useState(1);
    
@@ -19,11 +21,11 @@ const ListProduits = () => {
         setFirstRender(true) 
     }
     
-  }, [firstRender ,allproduit,produitlist])
+  }, [firstRender ,allproduit,produitlist,languageSelected])
   
   const [criteria , setCriteria]=useState("nom");
   const [search ,setChearch]=useState();
-
+  //console.log(traduction("pomme"))
  
   
 const handleSearchChange = event => {
@@ -33,7 +35,7 @@ const handleSearchChange = event => {
 const handleCriteriaChange = event => {
     setCriteria(event.target.value);
   }
-
+  
   
   console.log(criteria , search)
   let paginatedPrduit;
@@ -88,7 +90,7 @@ const handleCriteriaChange = event => {
                             <div className="inline-flex items-center justify-center text-xs font-bold text-white bg-gray-800 rounded-full w-9 h-9">{produit.quantité}</div>
                         </div>
                         <div className="overflow-hidden aspect-w-4 aspect-h-3">
-                            <img className="object-cover w-full h-full transition-all duration-300 group-hover:scale-125" 
+                            <img  className="object-cover w-full h-full transition-all duration-300 group-hover:scale-125" 
                             src={produit.imageUrl?produit.imageUrl:"https://img.freepik.com/free-vector/online-wishes-list-concept-illustration_114360-3900.jpg"} alt="" />
                         </div>
                         <div className="px-5 py-5">
@@ -100,7 +102,7 @@ const handleCriteriaChange = event => {
                             </h3>
                             <div className="flex mt-1.5 items-center justify-between space-x-4">
                                 <div className="flex flex-wrap items-center">
-                                    <p className="text-sm font text-gray-900">{produit.description}</p>
+                                    <p className="text-sm font text-gray-900">{produit.description.length>30?produit.description.substring(0,20)+"...":produit.description}</p>
                                 </div>
                             </div>
                             <div className="flex mt-1.5 items-center justify-between space-x-4">
@@ -109,7 +111,7 @@ const handleCriteriaChange = event => {
                                     <p className="text-sm font-bold text-gray-500">€</p>
                                 </div>
                                 <div className="flex items-center space-x-px">
-                                    
+                                <p className="text-xs font-sm  text-gray-700">{produit.boutique.nom}</p>
                                 </div>
                             </div>
                         </div>
